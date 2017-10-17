@@ -1,3 +1,12 @@
+.new-tweet {
+  border-radius: 6px;
+  margin: 25px;
+  background-color: #ddd;
+  border: 1px solid #999;
+  padding: 6px 6px;
+  box-shadow: 8px 8px 20px 0px black;
+}
+
 .new-tweet input {
   clear: both;
 }
@@ -6,12 +15,8 @@
   float: right;
 }
 
-.new-tweet {
-  border-radius: 6px;
-  margin: 25px;
-  background-color: #ddd;
-  border: 1px solid #999;
-  padding: 6px 6px;
+.red-counter {
+  color: red;
 }
 
 .new-tweet textarea {
