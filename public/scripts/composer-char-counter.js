@@ -18,12 +18,15 @@ $(document).ready(function() {
     counter.text(maxChars - textLength);
   })
   
+  
   // Added the following event handler to prevent going over maximum allowable characters
-  textarea.on("keydown", function(event) {
-    if (event.which !== 46 && event.which !== 8 && $(this).val().length > maxChars - 1) {
-      event.preventDefault();
-      $(this).val($(this).val().slice(0, maxChars));
-    }
-  })
+  // Can more easily be done with maxlength attribute in HTML tag
+  //
+  // textarea.on("keydown", function(event) {
+  //   if (event.which !== 46 && event.which !== 8 && $(this).val().length > maxChars - 1) {
+  //     event.preventDefault();
+  //     $(this).val($(this).val().slice(0, maxChars));
+  //   }
+  // })
 
 });
