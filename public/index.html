@@ -19,6 +19,9 @@
     <!-- Tweets CSS -->
     <link rel="stylesheet" href="/styles/tweets.css" type="text/css" />
 
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
     <!-- External JS -->
     <script type="text/javascript" src="/vendor/jquery-2.2.3.min.js"></script>
 
@@ -54,34 +57,31 @@
       </section>
 
 
-      <section id="tweets">
+      <section id="tweets-container">
 
         <article class="tweet">
           <header>
-            
-            <h2>Header</h2>
-
+            <img src="https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png" />
+            <h2>Tweeter Name</h2>
+            <span class="handle">@handle</span>
           </header>
-
-          <div class="tweet-body">
-
-            Tweet text.
-
-          </div>
-
+          <p>
+            Tweet text
+          </p>
           <footer>
-
-            Footer
-
+            <span class="age">10 days ago</span>
+            <span class="buttons">
+              <span class="footer-button">flag</span> | 
+              <span class="footer-button">retweet</span> | 
+              <span class="footer-button">like</span>
+            </span>
           </footer>
-
         </article>
-
 
       </section>
 
-    </main>
 
+    </main>
 
   </body>
 </html>

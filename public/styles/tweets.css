@@ -8,7 +8,7 @@ article.tweet {
 }
 
 article.tweet:hover {
-  border: 1px solid #111;
+  border: 1px solid red;
 }
 
 article.tweet header {
@@ -16,22 +16,51 @@ article.tweet header {
   background-color: #eee;
   border-radius: 6px 6px 0 0;
   padding: 6px;
+  overflow: hidden;
+}
+
+article.tweet img {
+  margin: 0;
+  float: left;
 }
 
 article.tweet h2 {
-  margin: 0;
+  margin: 0 0 0 4px;
+  float: left;
+}
+
+article.tweet .handle {
+  float: right;
+}
+
+article.tweet p {
+  margin: 16px 2px;
+  border-radius: 6px;
+  padding: 6px;
 }
 
 article.tweet footer {
   margin: 0 auto;
   background-color: #eee;
+  border-top: 1px solid #aaa; 
   border-radius: 0 0 6px 6px;
   padding: 6px;
-  font-size: 75%;
+  font-size: 65%;
 }
 
-article.tweet .tweet-body {
-  margin: 16px 2px;
-  border-radius: 6px;
-  padding: 6px;
+article.tweet footer .age {
+  display: inline-block;
+}
+
+article.tweet footer .buttons {
+  float: right;
+  display: none;
+}
+
+article.tweet:hover footer .buttons {
+  display: initial;
+}
+
+.footer-button:hover {
+  color: red;
 }
