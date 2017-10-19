@@ -8,7 +8,7 @@ article.tweet {
 }
 
 article.tweet:hover {
-  border: 1px solid red;
+  border: 1px solid rgb(35, 0, 160);
 }
 
 article.tweet header {
@@ -37,6 +37,7 @@ article.tweet p {
   margin: 16px 2px;
   border-radius: 6px;
   padding: 6px;
+  word-break: break-all;
 }
 
 article.tweet footer {
@@ -52,15 +53,23 @@ article.tweet footer .age {
   display: inline-block;
 }
 
-article.tweet footer .buttons {
+article.tweet footer .footer-buttons {
   float: right;
   display: none;
 }
 
-article.tweet:hover footer .buttons {
+article.tweet:hover footer .footer-buttons {
   display: initial;
 }
 
-.footer-button:hover {
-  color: red;
+article.tweet .flag:hover {
+  color: rgb(255, 111, 0);
+}
+
+article.tweet .retweet:hover {
+  color: rgb(0, 186, 0);
+}
+
+article.tweet .like:hover {
+  color: rgb(232, 0, 69);
 }

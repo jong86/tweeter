@@ -8,6 +8,7 @@
   z-index: 1;
   display: flex;
   align-items: center;
+  box-shadow: 0px 4px 20px 0px black;
 }
 
 #nav-bar .logo {
@@ -36,3 +37,4 @@
   border-color: black;
   background-color: rgba(255, 255, 255, 1);
 }
+

@@ -1,8 +1,6 @@
 
 $(document).ready(function() {
   
-  // console.log("char counter js loaded");
-
   const maxChars = 140;
 
   let countValue;
@@ -14,7 +12,7 @@ $(document).ready(function() {
 
     textLength = $(this).val().length;
     const counter = $(this).next().next().next();
-    if (textLength >=  maxChars) {
+    if (textLength >  maxChars) {
       counter.addClass("red-counter");
     } else {
       counter.removeClass("red-counter");

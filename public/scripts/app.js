@@ -4,8 +4,8 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
-
 function createTweetElement(tweetData) {
+  console.log(moment(tweetData.created_at));
   return `
   <article class="tweet">
     <header>
@@ -17,15 +17,15 @@ function createTweetElement(tweetData) {
       ${escapeHtml(tweetData.content.text)}
     </p>
     <footer>
-      <span class="age">${tweetData.created_at}</span>
-      <span class="buttons">
-        <span class="footer-button">
+      <span class="age">${moment(tweetData.created_at).fromNow()}</span>
+      <span class="footer-buttons">
+        <span class="footer-button flag">
           <i class="fa fa-flag" aria-hidden="true"></i>
         </span>&nbsp;|&nbsp;
-        <span class="footer-button">
+        <span class="footer-button retweet">
           <i class="fa fa-retweet" aria-hidden="true"></i>
         </span>&nbsp;|&nbsp; 
-        <span class="footer-button">
+        <span class="footer-button like">
           <i class="fa fa-heart" aria-hidden="true"></i>
         </span>
       </span>
@@ -87,7 +87,8 @@ $(function() {
       message.text("Too many characters! (Max is 140)")
       return;
     }
-    
+    $("#new-tweet-form .counter").text("140");
+
     const theForm = this;
     const data = $(this).serialize();
     console.log("Sending form data...");
@@ -100,6 +101,7 @@ $(function() {
       console.log("Post request complete.")
       getData();
     });
+
   });
 
   const newTweetSection = $("section.new-tweet");
@@ -108,6 +110,8 @@ $(function() {
     newTweetSection.slideToggle(200);
     newTweetTextarea.focus();
   });
+
+
 
 
 });
