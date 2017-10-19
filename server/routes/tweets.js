@@ -3,6 +3,7 @@
 const userHelper    = require("../lib/util/user-helper")
 
 const express       = require('express');
+const moment        = require('moment');
 const tweetsRoutes  = express.Router();
 
 module.exports = function(DataHelpers) {
@@ -18,6 +19,8 @@ module.exports = function(DataHelpers) {
   });
 
   tweetsRoutes.post("/", function(req, res) {
+    console.log("post happened.");
+
     if (!req.body.text) {
       res.status(400).json({ error: 'invalid request: no data in POST body'});
       return;
@@ -29,7 +32,7 @@ module.exports = function(DataHelpers) {
       content: {
         text: req.body.text
       },
-      created_at: Date.now()
+      created_at: moment().fromNow()
     };
 
     DataHelpers.saveTweet(tweet, (err) => {

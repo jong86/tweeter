@@ -6,17 +6,33 @@
   color: #e8fdff;
   padding: 0 2em 0 2em;
   z-index: 1;
+  display: flex;
+  align-items: center;
 }
 
 #nav-bar .logo {
   width: 80px;
   height: 80px;
-  float: left;
 }
 
 #nav-bar .header {
   font-size: 200%;
-  float: left;
   margin-left: 10px;
-  line-height: 72px;
+}
+
+#nav-bar #compose {
+  font-size: 130%;
+  color: #00a087;
+  line-height: 0;
+  height: 75%;
+  border-radius: 6px;
+  border: 1px solid black;
+  background-color: rgba(255, 255, 255, 0.75);
+  margin-left: auto;
+}
+
+#nav-bar #compose:hover {
+  color: #000000;
+  border-color: black;
+  background-color: rgba(255, 255, 255, 1);
 }

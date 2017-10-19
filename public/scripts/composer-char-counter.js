@@ -7,15 +7,20 @@ $(document).ready(function() {
 
   let countValue;
   const textarea = $("form textarea");
+
   textarea.on("input", function(event) {
+    const message = $(this).next().next();
+    message.empty();
+
     textLength = $(this).val().length;
-    const counter = $(this).next().next();
+    const counter = $(this).next().next().next();
     if (textLength >=  maxChars) {
       counter.addClass("red-counter");
     } else {
       counter.removeClass("red-counter");
     }
     counter.text(maxChars - textLength);
+
   })
   
   

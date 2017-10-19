@@ -11,6 +11,13 @@
   clear: both;
 }
 
+.new-tweet .message {
+  clear: both;
+  color: red;
+  font-size: 80%;
+  font-weight: bold;
+}
+
 .new-tweet .counter {
   float: right;
 }
