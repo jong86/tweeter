@@ -5,7 +5,6 @@
  */
 
 function createTweetElement(tweetData) {
-  console.log(moment(tweetData.created_at));
   return `
   <article class="tweet">
     <header>
@@ -46,12 +45,12 @@ var entityMap = {
   '=': '&#x3D;'
 };
 
+
 function escapeHtml(string) {
   return String(string).replace(/[&<>"'`=\/]/g, function (s) {
     return entityMap[s];
   });
 }
-
 
 $(function() {
 
@@ -68,14 +67,13 @@ $(function() {
       method: 'GET',
       url: '/tweets',
     }).done(function(results, err) {
-      console.log(results, err)
       renderTweets(results);
     });
   }
   getData();
 
 
-
+  const submitButton = $(".new-tweet input");
   $("#new-tweet-form").on("submit", function(event) {
     event.preventDefault();
     const textLength = $("#new-tweet-form textarea").val().length;
@@ -89,8 +87,13 @@ $(function() {
     }
     $("#new-tweet-form .counter").text("140");
 
+
     const theForm = this;
+
+    submitButton.attr("disabled", true);
+
     const data = $(this).serialize();
+    
     console.log("Sending form data...");
     $.ajax({
       method: 'POST',
@@ -98,8 +101,8 @@ $(function() {
       data: data
     }).done(function() {
       theForm.reset();
-      console.log("Post request complete.")
       getData();
+      submitButton.removeAttr("disabled");
     });
 
   });

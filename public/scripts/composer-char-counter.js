@@ -1,17 +1,22 @@
 
 $(document).ready(function() {
-  
   const maxChars = 140;
-
   let countValue;
-  const textarea = $("form textarea");
+  const textarea = $(".new-tweet form textarea");
+  const counter = $(".new-tweet form .counter");
+  console.log("counter: ", counter.val());
+  console.log("textarea: ", textarea.val());
+  if (textarea.val()) {
+    counter.val(maxChars - textarea.val().length);
+  } else {
+    counter.val(maxChars);
+  }
 
   textarea.on("input", function(event) {
     const message = $(this).next().next();
     message.empty();
 
     textLength = $(this).val().length;
-    const counter = $(this).next().next().next();
     if (textLength >  maxChars) {
       counter.addClass("red-counter");
     } else {
