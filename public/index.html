@@ -25,6 +25,10 @@
     <!-- External JS -->
     <script type="text/javascript" src="/vendor/jquery-2.2.3.min.js"></script>
     
+    
+    <!-- JQuery UI JS -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+
     <!-- App JS -->
     <script type="text/javascript" src="/scripts/app.js"></script>
     
@@ -42,10 +46,33 @@
   <body>
 
     <!-- Top nav bar (fixed) -->
+
     <nav id="nav-bar">
       <img class="logo" src="/images/bird.png">
       <span class="header">Tweeter</span>
-      <button id="compose"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Compose</button>
+      <span id="nav-button-box">
+        
+        <form method="POST" action="/login">
+          <label for="email">email:</label>
+          <input id="email" type="text" name="email" placeholder="email@example.com"/>
+          <label for="password">password:</label>
+          <input id="password" type="password" name="password" placeholder="password123"/>
+          <button id="btn-login">login</button>
+          <button id="btn-register">register</button>
+          <div class="errorText"></div>
+        </form>
+
+        <button id="login-register" data-status="off">
+          <i id="icon-down" class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+          <i id="icon-left" class="fa fa-caret-square-o-left" aria-hidden="true"></i>
+          &nbsp;Login/Register
+        </button>
+        <button id="compose">
+          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+          &nbsp;Compose
+        </button>
+
+      </span>
     </nav>
 
     <!-- Page-specific (main) content here -->

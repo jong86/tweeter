@@ -5,6 +5,8 @@
 const PORT          = 8080;
 const express       = require("express");
 const bodyParser    = require("body-parser");
+const cookieSession = require("cookie-session");
+const bcrypt        = require("bcrypt");
 const app           = express();
 
 const MongoClient = require("mongodb").MongoClient;
@@ -24,8 +26,12 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
   const DataHelpers = require("./lib/data-helpers.js")(db);
 
   const tweetsRoutes = require("./routes/tweets")(DataHelpers);
+  
+  const usersRoutes = require("./routes/users")(DataHelpers);
 
   app.use("/tweets", tweetsRoutes);
+
+  app.use("/users", usersRoutes);
 
   app.listen(PORT, () => {
     console.log("Example app listening on port " + PORT);

@@ -12,10 +12,14 @@
 }
 
 .new-tweet .message {
+  display: none;
   clear: both;
   color: red;
   font-size: 80%;
   font-weight: bold;
+  background-color: #ffd7de;
+  padding: .5em;
+  border: 1px dotted pink;
 }
 
 .new-tweet .counter {

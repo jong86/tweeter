@@ -37,7 +37,7 @@ article.tweet p {
   margin: 16px 2px;
   border-radius: 6px;
   padding: 6px;
-  word-break: break-word;
+  word-break: break-all;
 }
 
 article.tweet footer {
