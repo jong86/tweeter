@@ -26,7 +26,17 @@ module.exports = function makeDataHelpers(db) {
 
     loginUser: function(email, password, callback) {
       console.log("loginUser called for", email, password);
-      db.collection("users").find().toArray(callback);
+      db.collection("users").findOne({ "email": email }, { email: 1, password: 1, _id: 1 }, callback);
+    },
+
+    registrationRequest: function(email, callback) {
+      console.log("registerUser called for", email);
+      db.collection("users").findOne({ "email": email }, callback);
+    },
+
+    registerUser: function(userObj, callback) {
+      console.log("Attempting to register new user:", userObj);
+      db.collection("users").insertOne(userObj, callback);
     }
 
   }

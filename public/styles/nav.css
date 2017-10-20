@@ -23,7 +23,7 @@
 
 #nav-bar .header {
   font-size: 200%;
-  margin-left: 10px;
+  /* margin-left: 10px; */
 }
 
 #nav-bar button {
@@ -43,13 +43,24 @@
   background-color: rgba(255, 255, 255, 1);
 }
 
-#nav-button-box {
+
+#nav-button-box { 
   display: flex;
   align-items: center;
 }
 
-#nav-button-box form {
+#nav-button-box #login-register-form {
   display: none;
+  height: 8em;
+  width: 400px;
+  color: black;
+  border: 1px solid white;
+  border-radius: 6px 25px 25px 6px;
+  padding: 2em;
+  align-items: center;
+  justify-content: space-around;
+  background-color: rgba(255, 255, 255, 0.8);
+  flex-flow: row wrap;
 }
 
 #nav-button-box form button {
@@ -66,14 +77,9 @@
   display: none;
 }
 
-#nav-bar form {
-  border: 1px 0 1px 1px;
-  border-radius: 6px 25px 25px 6px;
-  padding: 1em;
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
 #nav-bar form button {
   font-size: 92%;
+  color: black;
 }
+
 

@@ -20,11 +20,18 @@ FOR TWEETS COLLECTION:
 
 
 FOR USER COLLECTION:
+
 [
   {
     "name": "jon",
     "email": "jon@jon.jon",
     "handle": "jon2",
+    "password": "123"
+  },
+  {
+    "name": "notjon",
+    "email": "other@fake.net",
+    "handle": "random",
     "password": "123"
   }
 ]

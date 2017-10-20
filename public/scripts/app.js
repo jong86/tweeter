@@ -150,26 +150,73 @@ $(function() {
   $("#nav-bar form #btn-register").on("click", function(event) {
     event.preventDefault();
     console.log("clicked register");
-
+    const data = $(this).parent().serialize();
+    console.log(data);
+    $.ajax({
+      method: "POST",
+      url: "users/register",
+      data: data
+    }).done(function() {
+      console.log("registration post request complete");
+    })
   });
-
-  $("#login-register").on("click", function(event) {
+  
+  const loginForm = $("#nav-button-box #login-register-form");
+  $("#login-register").on("click", function(event) { // to display login menu
     event.preventDefault();
     $(this).attr("disabled", true);
     if ($(this).data("status") === "off") {
-      $(this).children("#icon-down").css("display", "none");
-      $(this).children("#icon-left").css("display", "initial");
+      $(this).children(".fa-caret-square-o-down").css("display", "none");
+      $(this).children(".fa-caret-square-o-left").css("display", "initial");
       $(this).data("status", "on");
+      // loginForm.css("display", "flex");
     } else {
-      $(this).children("#icon-down").css("display", "initial");
-      $(this).children("#icon-left").css("display", "none");
+      $(this).children(".fa-caret-square-o-down").css("display", "initial");
+      $(this).children(".fa-caret-square-o-left").css("display", "none");
       $(this).data("status", "off");
+      // loginForm.css("display", "none");
     }
     console.log($(this).data("status"));
-    $("#nav-bar form").toggle("slide", { "direction": "right" }, 100, function() {
+    $("#nav-bar #login-register-form").toggle("slide", { "direction": "right" }, 100, function() {
       $("#login-register").attr("disabled", false);
     });
   });
+  
+  console.log(req.session);
+
+  
+  const _clr_disabledBg = "#aaa";
+  const _clr_enabledBg = "rgba(255, 255, 255, 0.75)";
+  const _clr_defaultBtnTxt = "#00a08";
+  $("#btn-register").css("background-color", _clr_disabledBg);
+
+  const toggleSwitch = $("#toggleSwitch");
+  toggleSwitch.attr("checked", false); // sets default value on page load
+  toggleSwitch.on("click", function(event) { // checked true = register; checked false = login
+    console.log(this.checked);
+    if (this.checked === true) {
+      $("#btn-register").attr("disabled", false);
+      $("#btn-register").css("background-color", _clr_enabledBg);
+      
+      $("#btn-login").attr("disabled", true);
+      $("#btn-login").css("background-color", _clr_disabledBg);
+
+      $("#nav-bar form #name").attr("disabled", false);
+      $("#nav-bar form #handle").attr("disabled", false);
+      
+    } else {
+      $("#btn-register").attr("disabled", true);
+      $("#btn-register").css("background-color", _clr_disabledBg);
+      
+      $("#btn-login").attr("disabled", false);
+      $("#btn-login").css("background-color", _clr_enabledBg);
+      
+      $("#nav-bar form #name").attr("disabled", true);
+      $("#nav-bar form #handle").attr("disabled", true);
+
+    }
+  });
+
 
 
 

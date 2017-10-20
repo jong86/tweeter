@@ -4,6 +4,7 @@
     <!-- Meta Information -->
     <title>Tweeter - Home Page</title>
     
+
     <!-- External CSS -->
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     
@@ -19,12 +20,15 @@
     <!-- Tweets CSS -->
     <link rel="stylesheet" href="/styles/tweets.css" type="text/css" />
     
+    <!-- Slider CSS -->
+    <link rel="stylesheet" href="/styles/slider.css" type="text/css" />
+    
     <!-- Icons -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     
+
     <!-- External JS -->
     <script type="text/javascript" src="/vendor/jquery-2.2.3.min.js"></script>
-    
     
     <!-- JQuery UI JS -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
@@ -52,21 +56,44 @@
       <span class="header">Tweeter</span>
       <span id="nav-button-box">
         
-        <form method="POST" action="/login">
+        
+        <form id="login-register-form">
+
+          
           <label for="email">email:</label>
           <input id="email" type="text" name="email" placeholder="email@example.com"/>
+          
           <label for="password">password:</label>
           <input id="password" type="password" name="password" placeholder="password123"/>
+
+          <label for="name">name:</label>
+          <input id="name" type="name" name="name" placeholder="Example Name"/>
+
+          <label for="handle">handle:</label>
+          <input id="handle" type="text" name="handle" />
+
           <button id="btn-login">login</button>
+          <label class="switch">
+              <input type="checkbox" id="toggleSwitch">
+              <span class="slider round"></span>
+          </label>
           <button id="btn-register">register</button>
           <div class="errorText"></div>
+
         </form>
+
 
         <button id="login-register" data-status="off">
           <i id="icon-down" class="fa fa-caret-square-o-down" aria-hidden="true"></i>
           <i id="icon-left" class="fa fa-caret-square-o-left" aria-hidden="true"></i>
           &nbsp;Login/Register
         </button>
+
+        <button id="logout">
+          <i class="fa fa-sign-out" aria-hidden="true"></i>
+          &nbsp;Logout
+        </button>
+
         <button id="compose">
           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
           &nbsp;Compose

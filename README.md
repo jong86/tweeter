@@ -1,3 +1,13 @@
+TODO LIST:
+-add more inputs for register form
+-make login/register form larger when it pops out (overlaps stuff a bit maybe)
+-logout button
+-messages for erroneous logins & registrations
+-store in Tweets database which user ID has liked that tweet
+-only logged in user can like tweets
+-users can't like their own tweets
+
+
 # Tweeter Project
 
 Tweeter is a simple, single-page Twitter clone.
