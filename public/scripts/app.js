@@ -7,7 +7,7 @@
 
 
 $(function() {
-  
+
   function createTweetElement(tweetData) {
     return `
     <article class="tweet" data-tweet_id="${tweetData._id}">
@@ -51,12 +51,13 @@ $(function() {
     '`': '&#x60;',
     '=': '&#x3D;'
   };
-  
   function escapeHtml(string) {
     return String(string).replace(/[&<>"'`=\/]/g, function (s) {
       return entityMap[s];
     });
   }
+
+
 
   function renderTweets(tweetsArray) {
     $("#tweets-container").empty();
@@ -66,13 +67,15 @@ $(function() {
   }
 
 
+
   function getData() {
     $.ajax({
       method: 'GET',
       url: '/tweets',
     }).done(function(results) {
       renderTweets(results.tweets);
-      console.log(results);
+
+      console.log("After getData happened: ", results);
       if (results.session.user_id) {
         console.log("Client logged in.", results.session);
       } else {
@@ -81,6 +84,7 @@ $(function() {
     });
   }
   getData();
+
 
 
   const submitButton = $(".new-tweet input");
@@ -114,6 +118,8 @@ $(function() {
     });
   });
 
+
+
   const newTweetSection = $("section.new-tweet");
   const newTweetTextarea = $("#new-tweet-form textarea");
   $("#compose").on("click", function() {
@@ -121,12 +127,7 @@ $(function() {
     newTweetTextarea.focus();
   });
 
-  $("#logout").on("click", function() {
-    $.ajax({
-      method: "POST",
-      url: "/users/logout",
-    })
-  })
+
 
 
   $(document).on("click", ".like", function() {
@@ -146,6 +147,8 @@ $(function() {
   });
 
 
+
+
   $("#login-register-section #btn-login").on("click", function(event) {
     event.preventDefault();
     console.log("clicked login");
@@ -155,13 +158,59 @@ $(function() {
       method: "POST",
       url: "users/login",
       data: data
-    }).done(function(data) {
-      console.log("data received login ajax done: ", data);
+    }).done(function(results) {
 
-      
+      console.log("After login clicked:", results);
+      if (results.session.user_id) {
+        console.log("Client logged in.", results.session);
+        $("#login-register-section").fadeToggle(200);
+
+
+
+
+      } else {
+        console.log("Client not logged in.");
+      }
+
     })
   });
+
+
+
+
+  $("#logout").on("click", function() {
+    $.ajax({
+      method: "POST",
+      url: "/users/logout",
+    }).done(function(results) {
+      
+    if (!results) {
+      console.log("Client logged out");
+
+      $(".new-tweet textarea").attr("disabled", true);
+      $(".new-tweet textarea").val("");
+      $(".new-tweet .counter").text("140");
+
+      $(".new-tweet .message").text("You must be logged in to tweet!");
+
+      $(".new-tweet .message").css("display", "inline");
+
+      $(".new-tweet input").attr("disabled", true);
+
+
+
+      // hide logout button
+
+    } else {
+      console.error("Error logging out");
+    }
+
+  })
+});
+
   
+
+
   $("#login-register-section #btn-register").on("click", function(event) {
     event.preventDefault();
     console.log("clicked register");
@@ -176,11 +225,15 @@ $(function() {
     })
   });
   
+
+
   const loginForm = $("#nav-button-box #login-register-form");
   $("#login-register-btn").on("click", function(event) { // to display login menu
     console.log("you clicked login/register button");
     $("#login-register-section").fadeToggle(200);
   });
+
+
 
   $("#login-register-section .close-button").on("click", function(event) { // to close login menu
     console.log("you clicked close button");
@@ -188,16 +241,15 @@ $(function() {
   });
   
   
+
   const _clr_disabledBg = "#aaa";
   const _clr_enabledBg = "rgba(255, 255, 255, 0.75)";
   const _clr_defaultBtnTxt = "#00a08";
   $("#btn-register").css("background-color", _clr_disabledBg);
-  
   $("#login-register-form #email").val("");
   $("#login-register-form #password").val("");
   $("#login-register-form #name").attr("disabled", true).val("");
   $("#login-register-form #handle").attr("disabled", true).val("");
-
   const toggleSwitch = $("#toggleSwitch");
   toggleSwitch.attr("checked", false); // sets default value on page load
   toggleSwitch.on("click", function(event) { // checked true = register; checked false = login
@@ -205,31 +257,19 @@ $(function() {
     if (this.checked === true) {
       $("#btn-register").attr("disabled", false);
       $("#btn-register").css("background-color", _clr_enabledBg);
-      
       $("#btn-login").attr("disabled", true);
       $("#btn-login").css("background-color", _clr_disabledBg);
-
       $("#login-register-form #name").attr("disabled", false);
       $("#login-register-form #handle").attr("disabled", false);
-      
     } else {
       $("#btn-register").attr("disabled", true);
       $("#btn-register").css("background-color", _clr_disabledBg);
-      
       $("#btn-login").attr("disabled", false);
       $("#btn-login").css("background-color", _clr_enabledBg);
-      
       $("#login-register-form #name").attr("disabled", true);
       $("#login-register-form #handle").attr("disabled", true);
-
     }
-
   });
-
-
-
-
-
 
 
 });

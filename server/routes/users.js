@@ -28,8 +28,12 @@ module.exports = function(DataHelpers) {
         if (results && results.email === req.body.email && bcrypt.compareSync(password, results.password)) {
           req.session.user_id = results._id;
           console.log("Logged in. req.session.user_id = " + req.session.user_id);
-          res.status(201).send(req.session.user_id);
-          return;
+
+          const response = {
+            session: req.session
+          };
+          res.json(response);
+
         } else {
           console.log("Login attempt failed.");
         }
@@ -42,7 +46,10 @@ module.exports = function(DataHelpers) {
     if (req.session) {
       req.session = null;
     }
-    console.log("Logged out, req.session.user_id = " + req.session.user_id);
+
+    res.json(req.session);
+
+    console.log("Logged out, req.session = " + req.session);
   });
 
 
