@@ -4,58 +4,59 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
-function createTweetElement(tweetData) {
-  return `
-  <article class="tweet" data-tweet_id="${tweetData._id}">
-    <header>
-      <img src="${tweetData.user.avatars.small}" />
-      <h2>${escapeHtml(tweetData.user.name)}</h2>
-      <span class="handle">${escapeHtml(tweetData.user.handle)}</span>
-    </header>
-    <p>
-      ${escapeHtml(tweetData.content.text)}
-    </p>
-    <footer>
-      <span class="age">${moment(tweetData.created_at).fromNow()}</span>
-      <span class="footer-buttons">
-        <span class="footer-button flag">
-          <i class="fa fa-flag" aria-hidden="true"></i>
-          <span class="flag-amount"></span>
-        </span>&nbsp;|&nbsp;
-        <span class="footer-button retweet">
-          <i class="fa fa-retweet" aria-hidden="true"></i>
-          <span class="retweet-amount"></span>
-        </span>&nbsp;|&nbsp; 
-        <span class="footer-button like">
-          <i class="fa fa-heart" aria-hidden="true"></i>
-          <span class="like-amount">${tweetData.likes}</span>
-        </span>
-      </span>
-    </footer>
-  </article>
-  `;
-}
 
-
-var entityMap = {
-  '&': '&amp;',
-  '<': '&lt;',
-  '>': '&gt;',
-  '"': '&quot;',
-  "'": '&#39;',
-  '/': '&#x2F;',
-  '`': '&#x60;',
-  '=': '&#x3D;'
-};
-
-
-function escapeHtml(string) {
-  return String(string).replace(/[&<>"'`=\/]/g, function (s) {
-    return entityMap[s];
-  });
-}
 
 $(function() {
+  
+  function createTweetElement(tweetData) {
+    return `
+    <article class="tweet" data-tweet_id="${tweetData._id}">
+      <header>
+        <img src="${tweetData.user.avatars.small}" />
+        <h2>${escapeHtml(tweetData.user.name)}</h2>
+        <span class="handle">${escapeHtml(tweetData.user.handle)}</span>
+      </header>
+      <p>
+        ${escapeHtml(tweetData.content.text)}
+      </p>
+      <footer>
+        <span class="age">${moment(tweetData.created_at).fromNow()}</span>
+        <span class="footer-buttons">
+          <span class="footer-button flag">
+            <i class="fa fa-flag" aria-hidden="true"></i>
+            <span class="flag-amount"></span>
+          </span>&nbsp;|&nbsp;
+          <span class="footer-button retweet">
+            <i class="fa fa-retweet" aria-hidden="true"></i>
+            <span class="retweet-amount"></span>
+          </span>&nbsp;|&nbsp; 
+          <span class="footer-button like">
+            <i class="fa fa-heart" aria-hidden="true"></i>
+            <span class="like-amount">${tweetData.likes}</span>
+          </span>
+        </span>
+      </footer>
+    </article>
+    `;
+  }
+  
+  
+  var entityMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+    '/': '&#x2F;',
+    '`': '&#x60;',
+    '=': '&#x3D;'
+  };
+  
+  function escapeHtml(string) {
+    return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+      return entityMap[s];
+    });
+  }
 
   function renderTweets(tweetsArray) {
     $("#tweets-container").empty();
