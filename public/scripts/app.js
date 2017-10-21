@@ -19,7 +19,7 @@ $(function() {
       <p>
         ${escapeHtml(tweetData.content.text)}
       </p>
-      <footer>
+      <footer class="noselect">
         <span class="age">${moment(tweetData.created_at).fromNow()}</span>
         <span class="footer-buttons">
           <span class="footer-button flag">
@@ -32,7 +32,7 @@ $(function() {
           </span>&nbsp;|&nbsp; 
           <span class="footer-button like">
             <i class="fa fa-heart" aria-hidden="true"></i>
-            <span class="like-amount">${tweetData.likes}</span>
+            <span class="like-amount">${tweetData.liked_by.length}</span>
           </span>
         </span>
       </footer>
@@ -157,20 +157,23 @@ $(function() {
 
 
 
-
+  //
+  // [Like Button]
+  //
   $(document).on("click", ".like", function() {
     const id = $(this).closest("article.tweet").data().tweet_id;
     const likeAmountSpan = $(this).children("span");
     const likeAmount = parseInt(likeAmountSpan.text());
-    // add dataset attribute to determine if user is going to like/unlike it -- this status will be determined by database
-
-    likeAmountSpan.text(likeAmount + 1);
-    console.log("like clicked.");
+    console.log("like button clicked.");
     $.ajax({
       method: "POST",
       url: "/tweets/like/" + id
-    }).done(function() {
-      console.log("like post complete");
+    }).done(function(userLikesThisTweet) {
+      if (userLikesThisTweet) {
+        likeAmountSpan.text(likeAmount + 1);
+      } else {
+        likeAmountSpan.text(likeAmount - 1);
+      }
     })
   });
 

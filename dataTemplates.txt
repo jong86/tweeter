@@ -1,21 +1,21 @@
 FOR TWEETS COLLECTION:
-
-{
-  "user": {
-    "name": "Descartes",
-    "avatars": {
-      "small":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
-      "regular": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
-      "large":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
+[
+  {
+    "user": {
+      "name": "Descartes",
+      "avatars": {
+        "small":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
+        "regular": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
+        "large":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
+      },
+      "handle": "@rd" },
+    "content": {
+      "text": "Je pense , donc je suis"
     },
-    "handle": "@rd" },
-  "content": {
-    "text": "Je pense , donc je suis"
-  },
-  "created_at": 1461113959088,
-  "liked_by": {},
-  "likes": 0
-}
+    "created_at": 1461113959088,
+    "liked_by": [],
+  }
+]
 
 
 
