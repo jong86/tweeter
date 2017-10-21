@@ -4,60 +4,73 @@ article.tweet {
   background-color: #ddd;
   border: 1px solid #999;
   padding: 0;
-  box-shadow: 8px 8px 20px 0px black; }
+  box-shadow: 8px 8px 20px 0px black;
+
+}
 
 article.tweet:hover {
-  border: 1px solid #2300a0; }
+  border: 1px solid rgb(35, 0, 160);
+}
 
 article.tweet header {
   margin: 0 auto;
   background-color: #eee;
   border-radius: 6px 6px 0 0;
   padding: 6px;
-  overflow: hidden; }
+  overflow: hidden;
+}
 
 article.tweet img {
   margin: 0;
-  float: left; }
+  float: left;
+}
 
 article.tweet h2 {
   margin: 0 0 0 4px;
-  float: left; }
+  float: left;
+}
 
 article.tweet .handle {
-  float: right; }
+  float: right;
+}
 
 article.tweet p {
   margin: 16px 2px;
   border-radius: 6px;
   padding: 6px;
-  word-break: break-all; }
+  word-break: break-all;
+}
 
 article.tweet footer {
   margin: 0 auto;
   background-color: #eee;
-  border-top: 1px solid #aaa;
+  border-top: 1px solid #aaa; 
   border-radius: 0 0 6px 6px;
   padding: 6px;
-  font-size: 65%; }
+  font-size: 65%;
+}
 
 article.tweet footer .age {
-  display: inline-block; }
+  display: inline-block;
+}
 
 article.tweet footer .footer-buttons {
   float: right;
-  display: none; }
+  display: none;
+}
 
 article.tweet:hover footer .footer-buttons {
-  display: initial; }
+  display: initial;
+}
 
 article.tweet .flag:hover {
-  color: #ff6f00; }
+  color: rgb(255, 111, 0);
+}
 
 article.tweet .retweet:hover {
-  color: #00ba00; }
+  color: rgb(0, 186, 0);
+}
 
 article.tweet .like:hover {
-  color: #e80045; }
-
-/*# sourceMappingURL=tweets.css.map */
+  color: rgb(232, 0, 69);
+}

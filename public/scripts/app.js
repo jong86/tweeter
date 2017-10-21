@@ -69,8 +69,14 @@ $(function() {
     $.ajax({
       method: 'GET',
       url: '/tweets',
-    }).done(function(results, err) {
-      renderTweets(results);
+    }).done(function(results) {
+      renderTweets(results.tweets);
+      console.log(results);
+      if (results.session.user_id) {
+        console.log("Client logged in.", results.session);
+      } else {
+        console.log("Client not logged in.");
+      }
     });
   }
   getData();
@@ -114,6 +120,13 @@ $(function() {
     newTweetTextarea.focus();
   });
 
+  $("#logout").on("click", function() {
+    $.ajax({
+      method: "POST",
+      url: "/users/logout",
+    })
+  })
+
 
   $(document).on("click", ".like", function() {
     const id = $(this).closest("article.tweet").data().tweet_id;
@@ -128,29 +141,30 @@ $(function() {
       url: "/tweets/like/" + id
     }).done(function() {
       console.log("like post complete");
-      // $(this).text($(this).text() + "hi");
     })
   });
 
 
-  $("#nav-bar form #btn-login").on("click", function(event) {
+  $("#login-register-section #btn-login").on("click", function(event) {
     event.preventDefault();
     console.log("clicked login");
-    const data = $(this).parent().serialize();
-    console.log(data);
+    const data = $(this).closest("form").serialize();
+    console.log("data:", data);
     $.ajax({
       method: "POST",
       url: "users/login",
       data: data
-    }).done(function() {
-      console.log("login post request complete");
+    }).done(function(data) {
+      console.log("data received login ajax done: ", data);
+
+      
     })
   });
   
-  $("#nav-bar form #btn-register").on("click", function(event) {
+  $("#login-register-section #btn-register").on("click", function(event) {
     event.preventDefault();
     console.log("clicked register");
-    const data = $(this).parent().serialize();
+    const data = $(this).closest("form").serialize();
     console.log(data);
     $.ajax({
       method: "POST",
@@ -162,33 +176,26 @@ $(function() {
   });
   
   const loginForm = $("#nav-button-box #login-register-form");
-  $("#login-register").on("click", function(event) { // to display login menu
-    event.preventDefault();
-    $(this).attr("disabled", true);
-    if ($(this).data("status") === "off") {
-      $(this).children(".fa-caret-square-o-down").css("display", "none");
-      $(this).children(".fa-caret-square-o-left").css("display", "initial");
-      $(this).data("status", "on");
-      // loginForm.css("display", "flex");
-    } else {
-      $(this).children(".fa-caret-square-o-down").css("display", "initial");
-      $(this).children(".fa-caret-square-o-left").css("display", "none");
-      $(this).data("status", "off");
-      // loginForm.css("display", "none");
-    }
-    console.log($(this).data("status"));
-    $("#nav-bar #login-register-form").toggle("slide", { "direction": "right" }, 100, function() {
-      $("#login-register").attr("disabled", false);
-    });
+  $("#login-register-btn").on("click", function(event) { // to display login menu
+    console.log("you clicked login/register button");
+    $("#login-register-section").fadeToggle(200);
+  });
+
+  $("#login-register-section .close-button").on("click", function(event) { // to close login menu
+    console.log("you clicked close button");
+    $(this).closest("section").fadeToggle(200);
   });
   
-  console.log(req.session);
-
   
   const _clr_disabledBg = "#aaa";
   const _clr_enabledBg = "rgba(255, 255, 255, 0.75)";
   const _clr_defaultBtnTxt = "#00a08";
   $("#btn-register").css("background-color", _clr_disabledBg);
+  
+  $("#login-register-form #email").val("");
+  $("#login-register-form #password").val("");
+  $("#login-register-form #name").attr("disabled", true).val("");
+  $("#login-register-form #handle").attr("disabled", true).val("");
 
   const toggleSwitch = $("#toggleSwitch");
   toggleSwitch.attr("checked", false); // sets default value on page load
@@ -201,8 +208,8 @@ $(function() {
       $("#btn-login").attr("disabled", true);
       $("#btn-login").css("background-color", _clr_disabledBg);
 
-      $("#nav-bar form #name").attr("disabled", false);
-      $("#nav-bar form #handle").attr("disabled", false);
+      $("#login-register-form #name").attr("disabled", false);
+      $("#login-register-form #handle").attr("disabled", false);
       
     } else {
       $("#btn-register").attr("disabled", true);
@@ -211,11 +218,15 @@ $(function() {
       $("#btn-login").attr("disabled", false);
       $("#btn-login").css("background-color", _clr_enabledBg);
       
-      $("#nav-bar form #name").attr("disabled", true);
-      $("#nav-bar form #handle").attr("disabled", true);
+      $("#login-register-form #name").attr("disabled", true);
+      $("#login-register-form #handle").attr("disabled", true);
 
     }
+
   });
+
+
+
 
 
 

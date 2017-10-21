@@ -3,9 +3,11 @@
   <head>
     <!-- Meta Information -->
     <title>Tweeter - Home Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
 
     <!-- External CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     
     <!-- App CSS -->
@@ -23,13 +25,19 @@
     <!-- Slider CSS -->
     <link rel="stylesheet" href="/styles/slider.css" type="text/css" />
     
+    <!-- Login/Register CSS -->
+    <link rel="stylesheet" href="/styles/login-register.css" type="text/css" />
+    
     <!-- Icons -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     
 
     <!-- External JS -->
     <script type="text/javascript" src="/vendor/jquery-2.2.3.min.js"></script>
-    
+
+    <!-- JQuery.cookie JS -->
+    <script src="/scripts/jquery.cookie/jquery.cookie.js"></script>
+
     <!-- JQuery UI JS -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
 
@@ -42,6 +50,7 @@
     <!-- Moment JS -->
     <script type="text/javascript" src="/scripts/moment.js"></script>
       
+
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,700,700i" rel="stylesheet">
 
@@ -55,55 +64,98 @@
       <img class="logo" src="/images/bird.png">
       <span class="header">Tweeter</span>
       <span id="nav-button-box">
-        
-        
-        <form id="login-register-form">
 
-          
-          <label for="email">email:</label>
-          <input id="email" type="text" name="email" placeholder="email@example.com"/>
-          
-          <label for="password">password:</label>
-          <input id="password" type="password" name="password" placeholder="password123"/>
-
-          <label for="name">name:</label>
-          <input id="name" type="name" name="name" placeholder="Example Name"/>
-
-          <label for="handle">handle:</label>
-          <input id="handle" type="text" name="handle" />
-
-          <button id="btn-login">login</button>
-          <label class="switch">
-              <input type="checkbox" id="toggleSwitch">
-              <span class="slider round"></span>
-          </label>
-          <button id="btn-register">register</button>
-          <div class="errorText"></div>
-
-        </form>
-
-
-        <button id="login-register" data-status="off">
+        <button id="login-register-btn" data-status="off">
           <i id="icon-down" class="fa fa-caret-square-o-down" aria-hidden="true"></i>
           <i id="icon-left" class="fa fa-caret-square-o-left" aria-hidden="true"></i>
-          &nbsp;Login/Register
+          <span class="button-label">&nbsp;Login/Register</span>
         </button>
 
         <button id="logout">
           <i class="fa fa-sign-out" aria-hidden="true"></i>
-          &nbsp;Logout
+          <span class="button-label">&nbsp;Logout</span>
         </button>
 
         <button id="compose">
           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-          &nbsp;Compose
+          <span class="button-label">&nbsp;Compose</span>
         </button>
 
       </span>
     </nav>
 
+
+
     <!-- Page-specific (main) content here -->
+
     <main class="container" id="mainArea">
+
+
+    <section id="login-register-section" class="container">
+      <h2>Login/Register
+          <span class="close-button">
+            <i class="fa fa-window-close-o" aria-hidden="true"></i>
+          </span>
+      </h2>
+
+
+      <form id="login-register-form">
+        <table class="table">
+          <tr>
+            <td class="label">
+              <label for="email">email:</label>
+            </td>
+            <td class="input">
+              <input id="email" type="text" name="email" placeholder="email@example.com"/><br />
+            </td>
+          </tr>
+          <tr>
+            <td class="label">
+                <label for="password">password:</label>
+              </td>
+              <td class="input">
+                <input id="password" type="password" name="password" placeholder="password123"/><br />  
+            </td>
+          </tr>
+          <tr>
+            <td class="label">
+              <label for="name">name:</label>
+            </td>
+            <td class="input">
+              <input id="name" type="text" name="name" /><br />
+            </td>
+          </tr>
+          <tr>
+            <td class="label">
+              <label for="handle">handle:</label>
+            </td>
+            <td class="input">
+              <input id="handle" type="text" name="handle" /><br />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button id="btn-login">login</button>
+            </td>
+            <td>
+              <label class="switch">
+                <input type="checkbox" id="toggleSwitch">
+                <span class="slider round"></span>
+              </label>
+            </td>
+            <td>
+              <button id="btn-register">register</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="errorText"></div>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </section>
+    
 
       <section class="new-tweet">
         <h2>Compose Tweet</h2>
@@ -117,7 +169,23 @@
 
 
       <section id="tweets-container">
-
+        <form id="login-register-form">
+          <label for="email">email:</label>
+          <input id="email" type="text" name="email" placeholder="email@example.com"/>
+          <label for="password">password:</label>
+          <input id="password" type="password" name="password" placeholder="password123"/>
+          <label for="name">name:</label>
+          <input id="name" type="name" name="name" placeholder="Example Name"/>
+          <label for="handle">handle:</label>
+          <input id="handle" type="text" name="handle" />
+          <button id="btn-login">login</button>
+          <label class="switch">
+              <input type="checkbox" id="toggleSwitch">
+              <span class="slider round"></span>
+          </label>
+          <button id="btn-register">register</button>
+          <div class="errorText"></div>
+        </form>
       </section>
 
 

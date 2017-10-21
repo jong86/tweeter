@@ -16,9 +16,6 @@ html {
 
 body {
   margin: 0;
-  color: #244751;
-  background-color: #eee;
-  font-family: 'Roboto Condensed', sans-serif;
 }
 
 /*
@@ -28,6 +25,16 @@ body {
 .container {
   margin: 0 auto;
   background-color: #fff;
-  width: 450px;
+  width: 30em;
   padding: 140px 2em 2em 2em;
+}
+
+body {
+  color: #244751;
+  background-color: #eee;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+body h2 {
+  font-weight: bold;
 }
