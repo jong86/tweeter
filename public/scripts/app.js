@@ -78,13 +78,36 @@ $(function() {
       console.log("After getData happened: ", results);
       if (results.session.user_id) {
         console.log("Client logged in.", results.session);
+        guiLoggedIn();
       } else {
         console.log("Client not logged in.");
+        guiLoggedOut();        
       }
     });
   }
   getData();
 
+
+  function guiLoggedOut() {
+    $(".new-tweet textarea").attr("disabled", true);
+    $(".new-tweet textarea").val("");
+    $(".new-tweet .counter").text("140");
+    $(".new-tweet .message").text("You must be logged in to tweet!");
+    $(".new-tweet .message").css("display", "inline");
+    $(".new-tweet input").attr("disabled", true);
+    $("#logout-btn").css("display", "none")
+    $("#login-register-btn").css("display", "inline")
+  }
+  
+  function guiLoggedIn(){
+    $(".new-tweet textarea").attr("disabled", false);
+    $(".new-tweet textarea").val("");
+    $(".new-tweet .counter").text("140");
+    $(".new-tweet .message").css("display", "none");
+    $(".new-tweet input").attr("disabled", false);
+    $("#logout-btn").css("display", "inline")
+    $("#login-register-btn").css("display", "none")
+  }
 
 
   const submitButton = $(".new-tweet input");
@@ -164,9 +187,7 @@ $(function() {
       if (results.session.user_id) {
         console.log("Client logged in.", results.session);
         $("#login-register-section").fadeToggle(200);
-
-
-
+        guiLoggedIn();
 
       } else {
         console.log("Client not logged in.");
@@ -178,7 +199,7 @@ $(function() {
 
 
 
-  $("#logout").on("click", function() {
+  $("#logout-btn").on("click", function() {
     $.ajax({
       method: "POST",
       url: "/users/logout",
@@ -186,20 +207,7 @@ $(function() {
       
     if (!results) {
       console.log("Client logged out");
-
-      $(".new-tweet textarea").attr("disabled", true);
-      $(".new-tweet textarea").val("");
-      $(".new-tweet .counter").text("140");
-
-      $(".new-tweet .message").text("You must be logged in to tweet!");
-
-      $(".new-tweet .message").css("display", "inline");
-
-      $(".new-tweet input").attr("disabled", true);
-
-
-
-      // hide logout button
+      guiLoggedOut();
 
     } else {
       console.error("Error logging out");
