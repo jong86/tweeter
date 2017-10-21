@@ -3,7 +3,17 @@
   position: fixed;
   display: none;
   
-  width: 26em;
+  width: 36rem;
+  @media screen and (max-width: 400px) {
+    width: 95vw;
+    & label {
+      font-size: 1.1rem;
+    }
+    & form {
+      padding: .1em;
+    }
+  }
+
   height: 24em;
   top: 50%;
   left: 50%;
@@ -18,10 +28,15 @@
 
   .close-button {
     float: right;
-    
+
+    // &:hover {  
+    //   cursor: not-allowed; 
+    // }
+
     &:active {
       color: rgb(118, 0, 0);
     }
+
   }
 
   #login-register-form {

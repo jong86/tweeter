@@ -62,6 +62,7 @@ $(function() {
   function renderTweets(tweetsArray) {
     $("#tweets-container").empty();
     tweetsArray.forEach((item) => {
+      console.log("item:", item);
       $("#tweets-container").prepend(createTweetElement(item));
     });
   }
@@ -99,7 +100,7 @@ $(function() {
     $("#login-register-btn").css("display", "inline")
   }
   
-  function guiLoggedIn(){
+  function guiLoggedIn() {
     $(".new-tweet textarea").attr("disabled", false);
     $(".new-tweet textarea").val("");
     $(".new-tweet .counter").text("140");
@@ -107,6 +108,10 @@ $(function() {
     $(".new-tweet input").attr("disabled", false);
     $("#logout-btn").css("display", "inline")
     $("#login-register-btn").css("display", "none")
+  }
+
+  function guiClearLoginRegisterForm() {
+    $("#login-register-form input").val("");
   }
 
 
@@ -143,7 +148,7 @@ $(function() {
 
 
 
-  const newTweetSection = $("section.new-tweet");
+  const newTweetSection = $(".new-tweet");
   const newTweetTextarea = $("#new-tweet-form textarea");
   $("#compose").on("click", function() {
     newTweetSection.slideToggle(200);
@@ -221,6 +226,9 @@ $(function() {
 
   $("#login-register-section #btn-register").on("click", function(event) {
     event.preventDefault();
+
+    // TODO Conditional checks to make sure form was filled out correctly
+
     console.log("clicked register");
     const data = $(this).closest("form").serialize();
     console.log(data);
@@ -239,6 +247,8 @@ $(function() {
   $("#login-register-btn").on("click", function(event) { // to display login menu
     console.log("you clicked login/register button");
     $("#login-register-section").fadeToggle(200);
+    guiClearLoginRegisterForm();
+
   });
 
 

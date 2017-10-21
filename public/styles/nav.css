@@ -12,6 +12,9 @@
   @media screen and (max-width: 600px) {
     #nav-bar .button-label {
       display: none; } }
+  @media screen and (max-width: 400px) {
+    #nav-bar {
+      padding: 0 1em 0 1em; } }
 
 #nav-bar #nav-button-box {
   margin-left: auto;

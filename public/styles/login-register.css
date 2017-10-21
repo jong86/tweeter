@@ -1,7 +1,7 @@
 #login-register-section {
   position: fixed;
   display: none;
-  width: 26em;
+  width: 36rem;
   height: 24em;
   top: 50%;
   left: 50%;
@@ -12,6 +12,13 @@
   padding: .3em;
   box-shadow: 8px 8px 20px 0px black;
   z-index: 2; }
+  @media screen and (max-width: 400px) {
+    #login-register-section {
+      width: 95vw; }
+      #login-register-section label {
+        font-size: 1.1rem; }
+      #login-register-section form {
+        padding: .1em; } }
   #login-register-section .close-button {
     float: right; }
     #login-register-section .close-button:active {

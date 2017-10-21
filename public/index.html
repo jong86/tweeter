@@ -62,12 +62,11 @@
 
     <nav id="nav-bar">
       <img class="logo" src="/images/bird.png">
-      <span class="header">Tweeter</span>
+      <span class="header noselect">Tweeter</span>
       <span id="nav-button-box">
 
         <button id="login-register-btn" data-status="off">
-          <i id="icon-down" class="fa fa-caret-square-o-down" aria-hidden="true"></i>
-          <i id="icon-left" class="fa fa-caret-square-o-left" aria-hidden="true"></i>
+          <i class="fa fa-window-maximize" aria-hidden="true"></i>
           <span class="button-label">&nbsp;Login/Register</span>
         </button>
 
@@ -90,104 +89,84 @@
 
     <main class="container" id="mainArea">
 
-
-    <section id="login-register-section" class="container">
-      <h2>Login/Register
-          <span class="close-button">
-            <i class="fa fa-window-close-o" aria-hidden="true"></i>
-          </span>
-      </h2>
-
-
-      <form id="login-register-form">
-        <table class="table">
-          <tr>
-            <td class="label">
-              <label for="email">email:</label>
-            </td>
-            <td class="input">
-              <input id="email" type="text" name="email" placeholder="email@example.com"/><br />
-            </td>
-          </tr>
-          <tr>
-            <td class="label">
-                <label for="password">password:</label>
+      <section id="login-register-section" class="container">
+        <h2 class="noselect">Login/Register
+            <span class="close-button">
+              <i class="fa fa-window-close-o" aria-hidden="true"></i>
+            </span>
+        </h2>
+        <form id="login-register-form">
+          <table class="table">
+            <tr>
+              <td class="label">
+                <label for="email" class="noselect">email:</label>
               </td>
               <td class="input">
-                <input id="password" type="password" name="password" placeholder="password123"/><br />  
-            </td>
-          </tr>
-          <tr>
-            <td class="label">
-              <label for="name">name:</label>
-            </td>
-            <td class="input">
-              <input id="name" type="text" name="name" /><br />
-            </td>
-          </tr>
-          <tr>
-            <td class="label">
-              <label for="handle">handle:</label>
-            </td>
-            <td class="input">
-              <input id="handle" type="text" name="handle" /><br />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <button id="btn-login">login</button>
-            </td>
-            <td>
-              <label class="switch">
-                <input type="checkbox" id="toggleSwitch">
-                <span class="slider round"></span>
-              </label>
-            </td>
-            <td>
-              <button id="btn-register">register</button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="errorText"></div>
-            </td>
-          </tr>
-        </table>
-      </form>
-    </section>
-    
-
-      <section class="new-tweet">
-        <h2>Compose Tweet</h2>
-        <form method="POST" action="/tweets" id="new-tweet-form">
-          <textarea name="text" placeholder="What are you humming about?"></textarea>
-          <input type="submit" value="Tweet">
-          <span class="message"></span>
-          <span class="counter"></span>
+                <input id="email" type="text" name="email" placeholder="email@example.com"/><br />
+              </td>
+            </tr>
+            <tr>
+              <td class="label">
+                  <label for="password" class="noselect">password:</label>
+                </td>
+                <td class="input">
+                  <input id="password" type="password" name="password" placeholder="password123"/><br />  
+              </td>
+            </tr>
+            <tr>
+              <td class="label">
+                <label for="name" class="noselect">name:</label>
+              </td>
+              <td class="input">
+                <input id="name" type="text" name="name" /><br />
+              </td>
+            </tr>
+            <tr>
+              <td class="label">
+                <label for="handle" class="noselect">handle:</label>
+              </td>
+              <td class="input">
+                <input id="handle" type="text" name="handle" /><br />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button id="btn-login">login</button>
+              </td>
+              <td>
+                <label class="switch">
+                  <input type="checkbox" id="toggleSwitch">
+                  <span class="slider round"></span>
+                </label>
+              </td>
+              <td>
+                <button id="btn-register" disabled>register</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="errorText noselect"></div>
+              </td>
+            </tr>
+          </table>
         </form>
       </section>
-
-
-      <section id="tweets-container">
-        <form id="login-register-form">
-          <label for="email">email:</label>
-          <input id="email" type="text" name="email" placeholder="email@example.com"/>
-          <label for="password">password:</label>
-          <input id="password" type="password" name="password" placeholder="password123"/>
-          <label for="name">name:</label>
-          <input id="name" type="name" name="name" placeholder="Example Name"/>
-          <label for="handle">handle:</label>
-          <input id="handle" type="text" name="handle" />
-          <button id="btn-login">login</button>
-          <label class="switch">
-              <input type="checkbox" id="toggleSwitch">
-              <span class="slider round"></span>
-          </label>
-          <button id="btn-register">register</button>
-          <div class="errorText"></div>
-        </form>
+      
+      <section class="tweet-sections">
+        <article class="new-tweet">
+          <h2 class="noselect">Compose Tweet</h2>
+          <form method="POST" action="/tweets" id="new-tweet-form">
+            <textarea name="text" placeholder="What are you humming about?"></textarea>
+            <input type="submit" value="Tweet">
+            <span class="message noselect"></span>
+            <span class="counter noselect"></span>
+          </form>
+        </article>
       </section>
 
+      <section class="tweet-sections" id="tweets-container">
+
+      </section>
 
     </main>
 

@@ -4,37 +4,53 @@
  * Do not modify these two selectors, please
  */
 html {
-  box-sizing: border-box;
-}
+  box-sizing: border-box; }
+
 *, *:before, *:after {
-  box-sizing: inherit;
-}
+  box-sizing: inherit; }
 
 /*
  * Global layout stuff
  */
-
 body {
-  margin: 0;
-}
+  margin: 0; }
 
 /*
 * Additional CSS can be defined below or in other CSS files, as per instructions
 */
-
 .container {
   margin: 0 auto;
   background-color: #fff;
-  width: 30em;
-  padding: 140px 2em 2em 2em;
-}
+  padding: 140px 2em 2em 2em; }
 
 body {
   color: #244751;
   background-color: #eee;
   font-family: 'Roboto Condensed', sans-serif;
-}
+  display: flex;
+  justify-content: center; }
+  body article {
+    width: 32rem; }
+    @media screen and (max-width: 400px) {
+      body article {
+        width: 90vw; } }
 
 body h2 {
-  font-weight: bold;
-}
+  font-weight: bold; }
+
+.noselect {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+     supported by Chrome and Opera */ }
+
+/*# sourceMappingURL=layout.css.map */

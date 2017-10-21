@@ -28,16 +28,21 @@ module.exports = function makeDataHelpers(db) {
       console.log("loginUser called for", email, password);
       db.collection("users").findOne({ "email": email }, { email: 1, password: 1, _id: 1 }, callback);
     },
-
+    
     registrationRequest: function(email, callback) {
       console.log("registerUser called for", email);
       db.collection("users").findOne({ "email": email }, { _id: 1 }, callback);
     },
-
+    
     registerUser: function(userObj, callback) {
       console.log("Attempting to register new user:", userObj);
       db.collection("users").insertOne(userObj, callback);
-    }
+    },
 
+    getUserDataForTweet: function(id, callback) {
+      console.log("getUserDataForTweet called for", id);
+      db.collection("users").findOne({ "_id": mongo.ObjectId(id) }, { name: 1, handle: 1 }, callback);
+    }
+    
   }
 }
