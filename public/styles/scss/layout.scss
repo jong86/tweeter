@@ -35,12 +35,15 @@ body {
   display: flex;
   justify-content: center;
 
-  section.tweet-sections {
-    // margin: 0 auto;
-    // text-align: center;
+  .tweet-sections {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
   }
 
   article {
+    align-self: center;
+    margin: 0 auto;
     width: 32rem;
 
     @media screen and (max-width: 400px) {

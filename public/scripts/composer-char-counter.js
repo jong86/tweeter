@@ -15,9 +15,6 @@ $(document).ready(function() {
     counter.text(maxChars);
   }
   
-  console.log("counter: ", counter.text());
-
-  console.log("textarea: ", textarea.val());
 
   textarea.on("input", function(event) {
     const message = $(this).next().next();

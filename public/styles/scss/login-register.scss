@@ -52,7 +52,9 @@
   form button {
     font-size: 92%;
     color: black;
+    width: 6em;
     height: 2em;
+    border-radius: 4px;
   }
 
   input {
@@ -72,8 +74,10 @@
     display: flex;
     justify-content: center;
     align-content: center;
+    flex-direction: row;
     td {
-      padding: 0
+      padding: 0;
+      margin: 0.2rem;
       input {
         width: 100%;
       }
@@ -90,5 +94,10 @@
       width: 80%;
       text-align: left;
     }
+  }
+
+  .errorText {
+    display: inline;
+    font-weight: bold;
   }
 }

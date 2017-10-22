@@ -32,7 +32,9 @@
   #login-register-section form button {
     font-size: 92%;
     color: black;
-    height: 2em; }
+    width: 6em;
+    height: 2em;
+    border-radius: 4px; }
   #login-register-section input {
     margin: 0 auto;
     width: 100%;
@@ -44,10 +46,13 @@
   #login-register-section tr {
     display: flex;
     justify-content: center;
-    align-content: center; }
+    align-content: center;
+    flex-direction: row; }
     #login-register-section tr td {
-      padding: 0 input;
-        padding-width: 100%; }
+      padding: 0;
+      margin: 0.2rem; }
+      #login-register-section tr td input {
+        width: 100%; }
     #login-register-section tr td.label {
       color: black;
       font-size: 1em;
@@ -58,5 +63,8 @@
     #login-register-section tr td.input {
       width: 80%;
       text-align: left; }
+  #login-register-section .errorText {
+    display: inline;
+    font-weight: bold; }
 
 /*# sourceMappingURL=login-register.css.map */

@@ -20,7 +20,6 @@ module.exports = function(DataHelpers) {
           tweets: tweets,
           session: req.session
         };
-        console.log(req.session.user_id);
         res.json(response);
       }
     });
@@ -38,7 +37,6 @@ module.exports = function(DataHelpers) {
 
     DataHelpers.getUserDataForTweet(req.session.user_id, function(err, results) {
       const userData = results;
-      console.log("userData: ", userData);
       const userObj = {
         name: userData.name,
         avatars: userHelp.avatars,
@@ -52,7 +50,6 @@ module.exports = function(DataHelpers) {
         created_at: Date.now(),
         liked_by: []
       };
-      console.log("tweetData.user:", tweetData.user);
       DataHelpers.saveTweet(tweetData, (err) => {
         if (err) {
           res.status(500).json({ error: err.message });
@@ -69,14 +66,11 @@ module.exports = function(DataHelpers) {
   tweetsRoutes.post("/like/:id", function(req, res) {
     const user_id = req.session.user_id;
     const tweet_id = req.params.id;
-    console.log("Like post route entered for tweet with id: ", tweet_id);
     DataHelpers.likeTweetCheckArray(tweet_id, function(err, results) {
       if (err) {
         console.error(err);
       } else {
         const likedBy = results.liked_by;
-        console.log("likedBy array[6]: ", likedBy[6]);
-        console.log("user_id: ", user_id);
         for (let i = 0; i < likedBy.length; i++) { // Loops thru to see if user has already liked that tweet
           if (likedBy[i] === user_id) {
             DataHelpers.unlikeTweet(tweet_id, user_id, function(err) {

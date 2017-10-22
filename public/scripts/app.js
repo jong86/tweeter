@@ -62,7 +62,6 @@ $(function() {
   function renderTweets(tweetsArray) {
     $("#tweets-container").empty();
     tweetsArray.forEach((item) => {
-      console.log("item:", item);
       $("#tweets-container").prepend(createTweetElement(item));
     });
   }
@@ -75,13 +74,9 @@ $(function() {
       url: '/tweets',
     }).done(function(results) {
       renderTweets(results.tweets);
-
-      console.log("After getData happened: ", results);
       if (results.session.user_id) {
-        console.log("Client logged in.", results.session);
         guiLoggedIn();
       } else {
-        console.log("Client not logged in.");
         guiLoggedOut();        
       }
     });
@@ -134,7 +129,6 @@ $(function() {
     const theForm = this;
     const data = $(this).serialize();
     submitButton.attr("disabled", true);
-    console.log("Sending form data...");
     $.ajax({
       method: "POST",
       url: "/tweets",
@@ -164,7 +158,6 @@ $(function() {
     const id = $(this).closest("article.tweet").data().tweet_id;
     const likeAmountSpan = $(this).children("span");
     const likeAmount = parseInt(likeAmountSpan.text());
-    console.log("like button clicked.");
     $.ajax({
       method: "POST",
       url: "/tweets/like/" + id
@@ -178,32 +171,61 @@ $(function() {
   });
 
 
+  
+  const inputChildren = $("#login-register-form").find(".input-field");
+  const errorDiv = $("#login-register-section div.errorText");
+  const iconError = "<i class='fa fa-exclamation-circle' aria-hidden='true'></i>";
+  const iconRightArrow = '<i class="fa fa-angle-double-right" aria-hidden="true"></i>';
+  const iconLeftArrow = '<i class="fa fa-angle-double-left" aria-hidden="true"></i>';
+  const defaultLoginRegisterMessage = `${iconLeftArrow} Flip switch to login or register ${iconRightArrow}`;
+  const clrLightGreen = "#abebc6";
+  errorDiv.html(defaultLoginRegisterMessage);
+  errorDiv.css("color", "black");
+  errorDiv.css("background-color", clrLightGreen);
 
+  function isFormOkay(n) {
+    for (let i = 0; i < n; i++) {
+      if (inputChildren[i].value === "") {  
+        errorDiv.html(`${iconError}&nbsp;Fields can't be empty!&nbsp;${iconError}`);
+        errorDiv.css("color", "red");
+        errorDiv.css("background-color", "pink");
+        console.log("Fields can't be empty!");
+        return false;
+      }
+    }
+    return true;
+  }
 
   $("#login-register-section #btn-login").on("click", function(event) {
     event.preventDefault();
-    console.log("clicked login");
+    if (!isFormOkay(2)) { return; }
     const data = $(this).closest("form").serialize();
-    console.log("data:", data);
     $.ajax({
       method: "POST",
       url: "users/login",
       data: data
     }).done(function(results) {
-
-      console.log("After login clicked:", results);
       if (results.session.user_id) {
-        console.log("Client logged in.", results.session);
         $("#login-register-section").fadeToggle(200);
         guiLoggedIn();
-
-      } else {
-        console.log("Client not logged in.");
       }
-
-    })
+    });
   });
 
+
+  $("#login-register-section #btn-register").on("click", function(event) {
+    event.preventDefault();
+    if (!isFormOkay(inputChildren.length)) { return; }
+    const data = $(this).closest("form").serialize();
+    $.ajax({
+        method: "POST",
+        url: "users/register",
+        data: data
+      }).done(function(results) {
+        console.log(results);
+    })
+  });
+    
 
 
 
@@ -212,43 +234,25 @@ $(function() {
       method: "POST",
       url: "/users/logout",
     }).done(function(results) {
-      
-    if (!results) {
-      console.log("Client logged out");
-      guiLoggedOut();
-
-    } else {
-      console.error("Error logging out");
-    }
-
-  })
-});
+      if (!results) {
+        guiLoggedOut();
+      }
+    })
+  });
 
   
 
 
-  $("#login-register-section #btn-register").on("click", function(event) {
-    event.preventDefault();
-
-    // TODO Conditional checks to make sure form was filled out correctly
-
-    console.log("clicked register");
-    const data = $(this).closest("form").serialize();
-    console.log(data);
-    $.ajax({
-      method: "POST",
-      url: "users/register",
-      data: data
-    }).done(function() {
-      console.log("registration post request complete");
-    })
+  $("#login-register-form").on("input", function() {
+    errorDiv.html(defaultLoginRegisterMessage);
+    errorDiv.css("color", "black");
+    errorDiv.css("background-color", clrLightGreen);
   });
   
 
 
   const loginForm = $("#nav-button-box #login-register-form");
   $("#login-register-btn").on("click", function(event) { // to display login menu
-    console.log("you clicked login/register button");
     $("#login-register-section").fadeToggle(200);
     guiClearLoginRegisterForm();
 
@@ -257,12 +261,14 @@ $(function() {
 
 
   $("#login-register-section .close-button").on("click", function(event) { // to close login menu
-    console.log("you clicked close button");
     $(this).closest("section").fadeToggle(200);
   });
   
-  
 
+  
+  //
+  // [Login/Register Switch]
+  //
   const _clr_disabledBg = "#aaa";
   const _clr_enabledBg = "rgba(255, 255, 255, 0.75)";
   const _clr_defaultBtnTxt = "#00a08";
@@ -274,7 +280,6 @@ $(function() {
   const toggleSwitch = $("#toggleSwitch");
   toggleSwitch.attr("checked", false); // sets default value on page load
   toggleSwitch.on("click", function(event) { // checked true = register; checked false = login
-    console.log(this.checked);
     if (this.checked === true) {
       $("#btn-register").attr("disabled", false);
       $("#btn-register").css("background-color", _clr_enabledBg);

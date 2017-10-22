@@ -29,7 +29,13 @@ body {
   font-family: 'Roboto Condensed', sans-serif;
   display: flex;
   justify-content: center; }
+  body .tweet-sections {
+    display: flex;
+    justify-content: center;
+    flex-direction: column; }
   body article {
+    align-self: center;
+    margin: 0 auto;
     width: 32rem; }
     @media screen and (max-width: 400px) {
       body article {
