@@ -42,6 +42,8 @@ module.exports = function(DataHelpers) {
     });
   });
 
+
+  
   usersRoutes.post("/logout", function(req, res) {
     if (req.session) {
       req.session = null;
@@ -66,7 +68,6 @@ module.exports = function(DataHelpers) {
       if (err) {
         res.status(500).json({ error: err.message });
       } else {
-        res.status(201).send();
         console.log("Registration response received.");
         if (results === null) {
           DataHelpers.registerUser(userObj, function(err, results) {
@@ -79,6 +80,7 @@ module.exports = function(DataHelpers) {
           });
         } else {
           console.error("User already exists.")
+          res.send("This email is already registered!");
         }
       }
     })

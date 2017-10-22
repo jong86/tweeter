@@ -64,6 +64,11 @@ module.exports = function(DataHelpers) {
 
 
   tweetsRoutes.post("/like/:id", function(req, res) {
+    if (!req.session.user_id) { 
+      console.log("Users can't like tweets if not logged in");
+      return;
+    }
+
     const user_id = req.session.user_id;
     const tweet_id = req.params.id;
     DataHelpers.likeTweetCheckArray(tweet_id, function(err, results) {

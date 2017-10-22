@@ -186,14 +186,23 @@ $(function() {
   function isFormOkay(n) {
     for (let i = 0; i < n; i++) {
       if (inputChildren[i].value === "") {  
-        errorDiv.html(`${iconError}&nbsp;Fields can't be empty!&nbsp;${iconError}`);
-        errorDiv.css("color", "red");
-        errorDiv.css("background-color", "pink");
-        console.log("Fields can't be empty!");
+        setLoginRegisterError("Fields can't be empty!");
         return false;
       }
     }
     return true;
+  }
+
+  function setLoginRegisterError(string) {
+    errorDiv.html(`${iconError}&nbsp;${string}&nbsp;${iconError}`);
+    errorDiv.css("color", "red");
+    errorDiv.css("background-color", "pink");
+  }
+
+  function resetLoginRegisterMessage() {
+    errorDiv.html(defaultLoginRegisterMessage);
+    errorDiv.css("color", "black");
+    errorDiv.css("background-color", clrLightGreen);
   }
 
   $("#login-register-section #btn-login").on("click", function(event) {
@@ -222,7 +231,7 @@ $(function() {
         url: "users/register",
         data: data
       }).done(function(results) {
-        console.log(results);
+        setLoginRegisterError(results);
     })
   });
     
@@ -244,9 +253,7 @@ $(function() {
 
 
   $("#login-register-form").on("input", function() {
-    errorDiv.html(defaultLoginRegisterMessage);
-    errorDiv.css("color", "black");
-    errorDiv.css("background-color", clrLightGreen);
+    resetLoginRegisterMessage();
   });
   
 
