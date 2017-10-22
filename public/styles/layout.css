@@ -13,7 +13,8 @@ html {
  * Global layout stuff
  */
 body {
-  margin: 0; }
+  margin: 0;
+  width: 100%; }
 
 /*
 * Additional CSS can be defined below or in other CSS files, as per instructions
@@ -29,6 +30,8 @@ body {
   font-family: 'Roboto Condensed', sans-serif;
   display: flex;
   justify-content: center; }
+  body main {
+    width: 100%; }
   body .tweet-sections {
     display: flex;
     justify-content: center;

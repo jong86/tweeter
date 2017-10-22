@@ -16,6 +16,7 @@
 
 body {
   margin: 0;
+  width: 100%;
 }
 
 /*
@@ -34,6 +35,10 @@ body {
   font-family: 'Roboto Condensed', sans-serif;
   display: flex;
   justify-content: center;
+
+  main {
+    width: 100%;
+  }
 
   .tweet-sections {
     display: flex;
