@@ -3,7 +3,7 @@ require('dotenv').config();
 
 // Basic express setup:
 
-const PORT          = 8080;
+const PORT          = process.env.PORT || 8080;
 const express       = require("express");
 const bodyParser    = require("body-parser");
 const cookieSession = require("cookie-session");
@@ -34,8 +34,6 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
   const DataHelpers = require("./lib/data-helpers.js")(db);
   const tweetsRoutes = require("./routes/tweets")(DataHelpers);
   const usersRoutes = require("./routes/users")(DataHelpers);
-  
-
   
   app.use("/tweets", tweetsRoutes);
   app.use("/users", usersRoutes);
