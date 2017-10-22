@@ -261,6 +261,7 @@ $(function() {
   const loginForm = $("#nav-button-box #login-register-form");
   $("#login-register-btn").on("click", function(event) { // to display login menu
     $("#login-register-section").fadeToggle(200);
+
     guiClearLoginRegisterForm();
 
   });
