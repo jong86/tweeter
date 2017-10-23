@@ -2,6 +2,11 @@
 
 Tweeter is a simple, single-page Twitter clone.
 
+## Screenshots
+
+!("Screenshot of tweets" on mobile-size display")[https://github.com/jong86/tweeter/blob/feature/login/docs/tweets-display.png]
+!("Screenshot of login panel")[https://github.com/jong86/tweeter/blob/feature/login/docs/login.png]
+
 
 ## Getting Started
 
@@ -12,7 +17,6 @@ Tweeter is a simple, single-page Twitter clone.
 
 
 ## Dependencies
-
 
 - Express
 - Node 5.10.x or above
