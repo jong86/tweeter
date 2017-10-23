@@ -109,6 +109,47 @@ $(function() {
     $("#login-register-form input").val("");
   }
 
+  //
+  // [Login/Register Switch]
+  //
+  const toggleSwitch = $("#toggleSwitch");
+  const _clr_disabledBg = "#aaa";
+  const _clr_enabledBg = "rgba(255, 255, 255, 0.75)";
+  const _clr_defaultBtnTxt = "#00a08";
+  $("#btn-register").css("background-color", _clr_disabledBg);
+  $("#login-register-form #email").val("");
+  $("#login-register-form #password").val("");
+  $("#login-register-form #name").attr("disabled", true).val("");
+  $("#login-register-form #handle").attr("disabled", true).val("");
+
+  function flipToRegister() {
+    $("#btn-register").attr("disabled", false);
+    $("#btn-register").css("background-color", _clr_enabledBg);
+    $("#btn-login").attr("disabled", true);
+    $("#btn-login").css("background-color", _clr_disabledBg);
+    $("#login-register-form #name").attr("disabled", false);
+    $("#login-register-form #handle").attr("disabled", false);
+  }
+
+  function flipToLogin() {
+    $("#btn-register").attr("disabled", true);
+    $("#btn-register").css("background-color", _clr_disabledBg);
+    $("#btn-login").attr("disabled", false);
+    $("#btn-login").css("background-color", _clr_enabledBg);
+    $("#login-register-form #name").attr("disabled", true);
+    $("#login-register-form #handle").attr("disabled", true);
+  }
+
+  toggleSwitch.attr("checked", false); // sets default value on page load
+  toggleSwitch.on("click", function(event) { // checked true = register; checked false = login
+    if (this.checked === true) {
+      flipToRegister();
+    } else {
+      flipToLogin();
+    }
+  });
+
+
 
   const submitButton = $(".new-tweet input");
   $("#new-tweet-form").on("submit", function(event) {
@@ -199,8 +240,8 @@ $(function() {
     errorDiv.css("background-color", "pink");
   }
 
-  function resetLoginRegisterMessage() {
-    errorDiv.html(defaultLoginRegisterMessage);
+  function setLoginRegisterMessage(string) {
+    errorDiv.html(string);
     errorDiv.css("color", "black");
     errorDiv.css("background-color", clrLightGreen);
   }
@@ -222,6 +263,7 @@ $(function() {
   });
 
 
+
   $("#login-register-section #btn-register").on("click", function(event) {
     event.preventDefault();
     if (!isFormOkay(inputChildren.length)) { return; }
@@ -231,7 +273,13 @@ $(function() {
         url: "users/register",
         data: data
       }).done(function(results) {
-        setLoginRegisterError(results);
+        if (results.error === true) {
+          setLoginRegisterError(results.message);
+        } else {
+          toggleSwitch.trigger("click");
+          guiClearLoginRegisterForm();
+          setLoginRegisterMessage(results.message);
+        }
     })
   });
     
@@ -253,7 +301,7 @@ $(function() {
 
 
   $("#login-register-form").on("input", function() {
-    resetLoginRegisterMessage();
+    setLoginRegisterMessage(defaultLoginRegisterMessage);
   });
   
 
@@ -272,38 +320,8 @@ $(function() {
     $(this).closest("section").fadeToggle(200);
   });
   
-
   
-  //
-  // [Login/Register Switch]
-  //
-  const _clr_disabledBg = "#aaa";
-  const _clr_enabledBg = "rgba(255, 255, 255, 0.75)";
-  const _clr_defaultBtnTxt = "#00a08";
-  $("#btn-register").css("background-color", _clr_disabledBg);
-  $("#login-register-form #email").val("");
-  $("#login-register-form #password").val("");
-  $("#login-register-form #name").attr("disabled", true).val("");
-  $("#login-register-form #handle").attr("disabled", true).val("");
-  const toggleSwitch = $("#toggleSwitch");
-  toggleSwitch.attr("checked", false); // sets default value on page load
-  toggleSwitch.on("click", function(event) { // checked true = register; checked false = login
-    if (this.checked === true) {
-      $("#btn-register").attr("disabled", false);
-      $("#btn-register").css("background-color", _clr_enabledBg);
-      $("#btn-login").attr("disabled", true);
-      $("#btn-login").css("background-color", _clr_disabledBg);
-      $("#login-register-form #name").attr("disabled", false);
-      $("#login-register-form #handle").attr("disabled", false);
-    } else {
-      $("#btn-register").attr("disabled", true);
-      $("#btn-register").css("background-color", _clr_disabledBg);
-      $("#btn-login").attr("disabled", false);
-      $("#btn-login").css("background-color", _clr_enabledBg);
-      $("#login-register-form #name").attr("disabled", true);
-      $("#login-register-form #handle").attr("disabled", true);
-    }
-  });
+
 
 
 });

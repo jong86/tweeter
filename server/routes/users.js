@@ -74,13 +74,11 @@ module.exports = function(DataHelpers) {
             if (err) {
               res.status(500).json({ error: err.message });
             } else {
-              res.status(201).send();
-              console.log("Registration successful.");
+              res.status(201).send({ message: "Registration successful, you may now log in.", error: false });
             }
           });
         } else {
-          console.error("User already exists.")
-          res.send("This email is already registered!");
+          res.send({ message: "This email is already registered!", error: true});
         }
       }
     })
