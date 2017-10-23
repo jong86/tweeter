@@ -1,18 +1,7 @@
-TODO LIST:
--add more inputs for register form
--make login/register form larger when it pops out (overlaps stuff a bit maybe)
--logout button
--messages for erroneous logins & registrations
--store in Tweets database which user ID has liked that tweet
--only logged in user can like tweets
--users can't like their own tweets
-
-
 # Tweeter Project
 
 Tweeter is a simple, single-page Twitter clone.
 
-This repository is the starter code for the project: Students will fork and clone this repository, then build upon it to practice their HTML, CSS, JS, jQuery and AJAX front-end skills, and their Node, Express and MongoDB back-end skills.
 
 ## Getting Started
 
@@ -21,7 +10,15 @@ This repository is the starter code for the project: Students will fork and clon
 3. Start the web server using the `npm run local` command. The app will be served at <http://localhost:8080/>.
 4. Go to <http://localhost:8080/> in your browser.
 
+
 ## Dependencies
+
 
 - Express
 - Node 5.10.x or above
+- Body-parser
+- Dotenv
+- Chance
+- md5
+- Moment
+- Mongodb
