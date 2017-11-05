@@ -1,21 +1,19 @@
 "use strict";
 
 const userHelper    = require("../lib/util/user-helper")
-
 const express       = require('express');
 const tweetsRoutes  = express.Router();
 
 module.exports = function(DataHelpers) {
 
-
-
-
+  //
+  // Get tweets:
+  //
   tweetsRoutes.get("/", function(req, res) {
     DataHelpers.getTweets((err, tweets) => {
       if (err) {
         res.status(500).json({ error: err.message });
       } else {
-
         const response = {
           tweets: tweets,
           session: req.session
@@ -26,15 +24,15 @@ module.exports = function(DataHelpers) {
   });
 
 
-
-
+  //
+  // Post a tweet:
+  //
   tweetsRoutes.post("/", function(req, res) {
-    if (!req.body.text) {
+    if (!req.body.text) { // To check if there is text sent w/ tweet
       res.status(400).json({ error: "invalid request: no data in POST body"});
       return;
     }
     const userHelp = userHelper.generateRandomUser();
-
     DataHelpers.getUserDataForTweet(req.session.user_id, function(err, results) {
       const userData = results;
       const userObj = {
@@ -58,17 +56,17 @@ module.exports = function(DataHelpers) {
         }
       });
     });
-
   });
 
 
-
+  //
+  // Post 'like' of a tweet
+  //
   tweetsRoutes.post("/like/:id", function(req, res) {
-    if (!req.session.user_id) { 
+    if (!req.session.user_id) {
       console.log("Users can't like tweets if not logged in");
       return;
     }
-
     const user_id = req.session.user_id;
     const tweet_id = req.params.id;
     DataHelpers.likeTweetCheckArray(tweet_id, function(err, results) {
@@ -100,9 +98,6 @@ module.exports = function(DataHelpers) {
       }
     })
   });
-
-
-
 
   return tweetsRoutes;
 }

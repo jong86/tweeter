@@ -5,7 +5,7 @@ $(document).ready(function() {
   let countValue;
   const textarea = $(".new-tweet form textarea");
   const counter = $(".new-tweet form .counter");
-  
+
   if (textarea.val()) {
     counter.text(maxChars - textarea.val().length);
     if (textarea.val().length >  maxChars) {
@@ -14,7 +14,7 @@ $(document).ready(function() {
   } else {
     counter.text(maxChars);
   }
-  
+
 
   textarea.on("input", function(event) {
     const message = $(this).next().next();
@@ -29,8 +29,8 @@ $(document).ready(function() {
     counter.text(maxChars - textLength);
 
   })
-  
-  
+
+
   // Added the following event handler to prevent going over maximum allowable characters
   // Can more easily be done with maxlength attribute in HTML tag
   //

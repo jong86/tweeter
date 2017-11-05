@@ -1,5 +1,37 @@
 $(function() {
 
+  //
+  // For function that escapes HTML to avoid cross-site scripting:
+  var entityMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+    '/': '&#x2F;',
+    '`': '&#x60;',
+    '=': '&#x3D;'
+  };
+
+  function escapeHtml(string) {
+    return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+      return entityMap[s];
+    });
+  }
+
+
+  //
+  // Loops through tweets array from DB and calls function to create elements for them:
+  function renderTweets(tweetsArray) {
+    $("#tweets-container").empty();
+    tweetsArray.forEach((item) => {
+      $("#tweets-container").prepend(createTweetElement(item));
+    });
+  }
+
+
+  //
+  // Template/function for creating tweets:
   function createTweetElement(tweetData) {
     return `
     <article class="tweet" data-tweet_id="${tweetData._id}">
@@ -32,33 +64,9 @@ $(function() {
     `;
   }
 
-  var entityMap = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;',
-    '/': '&#x2F;',
-    '`': '&#x60;',
-    '=': '&#x3D;'
-  };
-  function escapeHtml(string) {
-    return String(string).replace(/[&<>"'`=\/]/g, function (s) {
-      return entityMap[s];
-    });
-  }
 
-
-
-  function renderTweets(tweetsArray) {
-    $("#tweets-container").empty();
-    tweetsArray.forEach((item) => {
-      $("#tweets-container").prepend(createTweetElement(item));
-    });
-  }
-
-
-
+  //
+  // Retrive tweets from database
   function getData() {
     $.ajax({
       method: 'GET',
@@ -75,6 +83,8 @@ $(function() {
   getData();
 
 
+  //
+  // Helper functions for changing GUI based on logged in/out status
   function guiLoggedOut() {
     $(".new-tweet textarea").attr("disabled", true);
     $(".new-tweet textarea").val("");
@@ -101,12 +111,11 @@ $(function() {
   }
 
   //
-  // [Login/Register Switch]
-  //
-  const toggleSwitch = $("#toggleSwitch");
-  const _clr_disabledBg = "#aaa";
-  const _clr_enabledBg = "rgba(255, 255, 255, 0.75)";
-  const _clr_defaultBtnTxt = "#00a08";
+  // Login/Register switch:
+  var toggleSwitch = $("#toggleSwitch");
+  var _clr_disabledBg = "#aaa";
+  var _clr_enabledBg = "rgba(255, 255, 255, 0.75)";
+  var _clr_defaultBtnTxt = "#00a08";
   $("#btn-register").css("background-color", _clr_disabledBg);
   $("#login-register-form #email").val("");
   $("#login-register-form #password").val("");
@@ -142,11 +151,11 @@ $(function() {
 
 
 
-  const submitButton = $(".new-tweet input");
+  var submitButton = $(".new-tweet input");
   $("#new-tweet-form").on("submit", function(event) {
     event.preventDefault();
-    const textLength = $("#new-tweet-form textarea").val().length;
-    const message = $("#new-tweet-form .message");
+    var textLength = $("#new-tweet-form textarea").val().length;
+    var message = $("#new-tweet-form .message");
     if (textLength === 0) {
       message.css("display", "inline");
       message.text("You need to type something!")
@@ -158,8 +167,8 @@ $(function() {
     }
     $("#new-tweet-form .counter").text("140");
 
-    const theForm = this;
-    const data = $(this).serialize();
+    var theForm = this;
+    var data = $(this).serialize();
     submitButton.attr("disabled", true);
     $.ajax({
       method: "POST",
@@ -174,8 +183,8 @@ $(function() {
 
 
 
-  const newTweetSection = $(".new-tweet");
-  const newTweetTextarea = $("#new-tweet-form textarea");
+  var newTweetSection = $(".new-tweet");
+  var newTweetTextarea = $("#new-tweet-form textarea");
   $("#compose").on("click", function() {
     newTweetSection.slideToggle(200);
     newTweetTextarea.focus();
@@ -187,9 +196,9 @@ $(function() {
   // [Like Button]
   //
   $(document).on("click", ".like", function() {
-    const id = $(this).closest("article.tweet").data().tweet_id;
-    const likeAmountSpan = $(this).children("span");
-    const likeAmount = parseInt(likeAmountSpan.text());
+    var id = $(this).closest("article.tweet").data().tweet_id;
+    var likeAmountSpan = $(this).children("span");
+    var likeAmount = parseInt(likeAmountSpan.text());
     $.ajax({
       method: "POST",
       url: "/tweets/like/" + id
@@ -203,21 +212,21 @@ $(function() {
   });
 
 
-  
-  const inputChildren = $("#login-register-form").find(".input-field");
-  const errorDiv = $("#login-register-section div.errorText");
-  const iconError = "<i class='fa fa-exclamation-circle' aria-hidden='true'></i>";
-  const iconRightArrow = '<i class="fa fa-angle-double-right" aria-hidden="true"></i>';
-  const iconLeftArrow = '<i class="fa fa-angle-double-left" aria-hidden="true"></i>';
-  const defaultLoginRegisterMessage = `${iconLeftArrow} Flip switch to login or register ${iconRightArrow}`;
-  const clrLightGreen = "#abebc6";
+
+  var inputChildren = $("#login-register-form").find(".input-field");
+  var errorDiv = $("#login-register-section div.errorText");
+  var iconError = "<i class='fa fa-exclamation-circle' aria-hidden='true'></i>";
+  var iconRightArrow = '<i class="fa fa-angle-double-right" aria-hidden="true"></i>';
+  var iconLeftArrow = '<i class="fa fa-angle-double-left" aria-hidden="true"></i>';
+  var defaultLoginRegisterMessage = `${iconLeftArrow} Flip switch to login or register ${iconRightArrow}`;
+  var clrLightGreen = "#abebc6";
   errorDiv.html(defaultLoginRegisterMessage);
   errorDiv.css("color", "black");
   errorDiv.css("background-color", clrLightGreen);
 
   function isFormOkay(n) {
     for (let i = 0; i < n; i++) {
-      if (inputChildren[i].value === "") {  
+      if (inputChildren[i].value === "") {
         setLoginRegisterError("Fields can't be empty!");
         return false;
       }
@@ -240,7 +249,7 @@ $(function() {
   $("#login-register-section #btn-login").on("click", function(event) {
     event.preventDefault();
     if (!isFormOkay(2)) { return; }
-    const data = $(this).closest("form").serialize();
+    var data = $(this).closest("form").serialize();
     $.ajax({
       method: "POST",
       url: "users/login",
@@ -258,7 +267,7 @@ $(function() {
   $("#login-register-section #btn-register").on("click", function(event) {
     event.preventDefault();
     if (!isFormOkay(inputChildren.length)) { return; }
-    const data = $(this).closest("form").serialize();
+    var data = $(this).closest("form").serialize();
     $.ajax({
         method: "POST",
         url: "users/register",
@@ -273,7 +282,7 @@ $(function() {
         }
     })
   });
-    
+
 
 
 
@@ -288,13 +297,13 @@ $(function() {
     })
   });
 
-  
+
 
 
   $("#login-register-form").on("input", function() {
     setLoginRegisterMessage(defaultLoginRegisterMessage);
   });
-  
+
 
 
   const loginForm = $("#nav-button-box #login-register-form");
@@ -310,8 +319,8 @@ $(function() {
   $("#login-register-section .close-button").on("click", function(event) { // to close login menu
     $(this).closest("section").fadeToggle(200);
   });
-  
-  
+
+
 
 
 

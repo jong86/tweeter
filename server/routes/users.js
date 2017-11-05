@@ -1,19 +1,17 @@
 "use strict";
 
-
-
 const userHelper    = require("../lib/util/user-helper")
-
 const express       = require('express');
 const bcrypt        = require("bcrypt");
-
 
 const usersRoutes   = express.Router();
 
 module.exports = function(DataHelpers) {
 
 
-
+  //
+  // Post to login
+  //
   usersRoutes.post("/login", function(req, res) {
     console.log("Login route entered for: ", req.body.email);
     const email = req.body.email;
@@ -37,27 +35,26 @@ module.exports = function(DataHelpers) {
         } else {
           console.log("Login attempt failed.");
         }
-
       }
     });
   });
 
 
-  
+  //
+  // Post to logout
+  //
   usersRoutes.post("/logout", function(req, res) {
     if (req.session) {
       req.session = null;
     }
-
     res.json(req.session);
-
-    console.log("Logged out, req.session = " + req.session);
   });
 
 
-  
+  //
+  // Post to register
+  //
   usersRoutes.post("/register", function(req, res) {
-    console.log("Register route entered.");
     const userObj = {
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 10),
@@ -83,6 +80,6 @@ module.exports = function(DataHelpers) {
       }
     })
   });
-  
+
   return usersRoutes;
 }
