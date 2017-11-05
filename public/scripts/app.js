@@ -68,7 +68,7 @@ $(function() {
       if (results.session.user_id) {
         guiLoggedIn();
       } else {
-        guiLoggedOut();        
+        guiLoggedOut();
       }
     });
   }
@@ -85,7 +85,7 @@ $(function() {
     $("#logout-btn").css("display", "none")
     $("#login-register-btn").css("display", "inline")
   }
-  
+
   function guiLoggedIn() {
     $(".new-tweet textarea").attr("disabled", false);
     $(".new-tweet textarea").val("");
