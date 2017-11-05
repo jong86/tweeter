@@ -1,11 +1,3 @@
-/*
- * Client-side JS logic goes here
- * jQuery is already loaded
- * Reminder: Use (and do all your DOM work in) jQuery's document ready function
- */
-
-
-
 $(function() {
 
   function createTweetElement(tweetData) {
@@ -29,7 +21,7 @@ $(function() {
           <span class="footer-button retweet">
             <i class="fa fa-retweet" aria-hidden="true"></i>
             <span class="retweet-amount"></span>
-          </span>&nbsp;|&nbsp; 
+          </span>&nbsp;|&nbsp;
           <span class="footer-button like">
             <i class="fa fa-heart" aria-hidden="true"></i>
             <span class="like-amount">${tweetData.liked_by.length}</span>
@@ -39,8 +31,7 @@ $(function() {
     </article>
     `;
   }
-  
-  
+
   var entityMap = {
     '&': '&amp;',
     '<': '&lt;',
