@@ -6,56 +6,51 @@ const bcrypt        = require("bcrypt");
 
 const usersRoutes   = express.Router();
 
+
 module.exports = function(DataHelpers) {
 
+  //---------------
+  // Post to login:
+  //
 
-  //
-  // Post to login
-  //
   usersRoutes.post("/login", function(req, res) {
-    console.log("Login route entered for: ", req.body.email);
     const email = req.body.email;
     const password = req.body.password;
+
     DataHelpers.loginUser(email, password, function(err, results) {
       if (err) {
         res.status(500).json({ error: err.message });
       } else {
-        console.log("Login response received.");
-        console.log(results);
-
         if (results && results.email === req.body.email && bcrypt.compareSync(password, results.password)) {
           req.session.user_id = results._id;
-          console.log("Logged in. req.session.user_id = " + req.session.user_id);
+          res.json(req.session);
 
-          const response = {
-            session: req.session
-          };
-          res.json(response);
-
-        } else {
-          console.log("Login attempt failed.");
+        } else if (!results) {
+          res.send({ message: "Incorrect username / password" });
         }
       }
     });
   });
 
 
+
+  //----------------
+  // Post to logout:
   //
-  // Post to logout
-  //
+
   usersRoutes.post("/logout", function(req, res) {
-    console.log("got into route")
     if (req.session) {
-      console.log("nullifying req.session")
       req.session = null;
     }
     res.json(req.session);
   });
 
 
+
+  //------------------
+  // Post to register:
   //
-  // Post to register
-  //
+
   usersRoutes.post("/register", function(req, res) {
     const userObj = {
       email: req.body.email,
@@ -67,15 +62,13 @@ module.exports = function(DataHelpers) {
       if (err) {
         res.status(500).json({ error: err.message });
       } else {
-        console.log("Registration response received.");
         if (results === null) {
           DataHelpers.registerUser(userObj, function(err, results) {
             if (err) {
               res.status(500).json({ error: err.message });
             } else {
-              req.session.user_id = results._id;
-              res.status(200).send("registered, logging in");
-              // res.status(201).send({ message: "Registration successful, you may now log in.", error: false });
+              req.session.user_id = results.insertedId;
+              res.status(200).send({ message: "Registration successful, you may now log in.", error: false });
             }
           });
         } else {

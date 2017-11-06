@@ -6,9 +6,10 @@ const tweetsRoutes  = express.Router();
 
 module.exports = function(DataHelpers) {
 
-  //
+  //------------
   // Get tweets:
   //
+
   tweetsRoutes.get("/", function(req, res) {
     DataHelpers.getTweets((err, tweets) => {
       if (err) {
@@ -24,12 +25,14 @@ module.exports = function(DataHelpers) {
   });
 
 
-  //
+
+  //--------------
   // Post a tweet:
   //
+
   tweetsRoutes.post("/", function(req, res) {
     if (!req.body.text) { // To check if there is text sent w/ tweet
-      res.status(400).json({ error: "invalid request: no data in POST body"});
+      res.status(400).json({ error: "invalid request: no data in POST body" });
       return;
     }
     const userHelp = userHelper.generateRandomUser();
@@ -59,12 +62,13 @@ module.exports = function(DataHelpers) {
   });
 
 
+
+  //------------------------
+  // Post 'like' of a tweet:
   //
-  // Post 'like' of a tweet
-  //
+
   tweetsRoutes.post("/like/:id", function(req, res) {
     if (!req.session.user_id) {
-      console.log("Users can't like tweets if not logged in");
       return;
     }
     const user_id = req.session.user_id;

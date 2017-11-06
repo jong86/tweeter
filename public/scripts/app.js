@@ -1,9 +1,9 @@
 $(function() {
 
-
   //---------------------------------------------------------
   // Compose button event handler for showing new tweet form:
   //
+
   var newTweetSection = $(".new-tweet");
   var newTweetTextarea = $("#new-tweet-form textarea");
   $("#compose").on("click", function() {
@@ -12,9 +12,11 @@ $(function() {
   });
 
 
+
   //-------------------------------------
   // Tweet submission form event handler:
   //
+
   var submitButton = $(".new-tweet input");
   $("#new-tweet-form").on("submit", function(event) {
     event.preventDefault();
@@ -46,9 +48,11 @@ $(function() {
   });
 
 
+
   //---------------------------
   // Like button event handler:
   //
+
   $(document).on("click", ".like", function() {
     var id = $(this).closest("article.tweet").data().tweet_id;
     var likeAmountSpan = $(this).children("span");
@@ -70,11 +74,10 @@ $(function() {
   // Login/register form toggle-switch variables and event handler:
   //
 
-  // JQuery object storage into variables:
   var toggleSwitch = $("#toggleSwitch");
 
   // Initial styling/setup:
-  $("#btn-register").css("background-color", _clr_disabledBg);
+  $("#btn-register").css("background-color", clrDisabledBg);
   $("#login-register-form #email").val("");
   $("#login-register-form #password").val("");
   $("#login-register-form #name").attr("disabled", true).val("");
@@ -95,7 +98,6 @@ $(function() {
   // Login form event handlers:
   //
 
-    // Can split this function to follow "single responsibility rule":
   function isFormOkay(numFields) {
     for (let i = 0; i < numFields; i++) {
       if (inputChildren[i].value === "") {
@@ -105,10 +107,8 @@ $(function() {
     }
     return true;
   }
-  // ^^ Need to do this error handling on server side too
 
   $("#login-register-section #btn-login").on("click", function(event) {
-    console.log("clicked login");
     event.preventDefault();
     if (!isFormOkay(2)) { return; }
     var data = $(this).closest("form").serialize();
@@ -116,13 +116,12 @@ $(function() {
       method: "POST",
       url: "users/login",
       data: data,
-      error: function(err) {
-        console.log(err)
-      }
     }).done(function(results) {
-      if (results.session.user_id) {
+      if (results.user_id) {
         $("#login-register-section").fadeToggle(200);
         guiLoggedIn();
+      } else {
+        setLoginRegisterError(results.message);
       }
     });
   });
@@ -141,8 +140,6 @@ $(function() {
         } else {
           toggleSwitch.trigger("click");
           guiClearLoginRegisterForm();
-          // setLoginRegisterMessage(results.message);
-          console.log(results);
           $("#login-register-section").fadeToggle(200);
           guiLoggedIn();
         }
@@ -150,7 +147,6 @@ $(function() {
   });
 
   $("#logout-btn").on("click", function() {
-    console.log("logging out");
     $.ajax({
       method: "POST",
       url: "/users/logout",
@@ -168,6 +164,7 @@ $(function() {
   var loginForm = $("#nav-button-box #login-register-form");
   $("#login-register-btn").on("click", function(event) { // to display login menu
     $("#login-register-section").fadeToggle(200);
+    setLoginRegisterMessage(defaultLoginRegisterMessage);
     guiClearLoginRegisterForm();
   });
 
@@ -176,23 +173,9 @@ $(function() {
   });
 
 
-  //-----------------------------------
-  // Set up of GUI error display stuff:
-  //
-  var inputChildren = $("#login-register-form").find(".input-field");
-  var iconError = "<i class='fa fa-exclamation-circle' aria-hidden='true'></i>";
-  var iconRightArrow = '<i class="fa fa-angle-double-right" aria-hidden="true"></i>';
-  var iconLeftArrow = '<i class="fa fa-angle-double-left" aria-hidden="true"></i>';
-  var defaultLoginRegisterMessage = `${iconLeftArrow} Flip switch to login or register ${iconRightArrow}`;
-  var clrLightGreen = "#abebc6";
 
-  var errorDiv = $("#login-register-section div.errorText");
-  errorDiv.html(defaultLoginRegisterMessage);
-  errorDiv.css("color", "black");
-  errorDiv.css("background-color", clrLightGreen);
-
-  //----------------------------------------
-  // Initial getting of tweets on page load:
+  //------------------------
+  // Initial load of tweets:
   //
   getTweets();
 
