@@ -4,53 +4,35 @@
     <!-- Meta Information -->
     <title>Tweeter - Home Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
 
     <!-- External CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    
-    <!-- App CSS -->
+
+    <!-- Project CSS -->
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-    
-    <!-- Nav CSS -->
     <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
-    
-    <!-- New tweets CSS -->
     <link rel="stylesheet" href="/styles/new-tweets.css" type="text/css" />
-    
-    <!-- Tweets CSS -->
     <link rel="stylesheet" href="/styles/tweets.css" type="text/css" />
-    
-    <!-- Slider CSS -->
     <link rel="stylesheet" href="/styles/slider.css" type="text/css" />
-    
-    <!-- Login/Register CSS -->
     <link rel="stylesheet" href="/styles/login-register.css" type="text/css" />
-    
+
     <!-- Icons -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    
 
     <!-- External JS -->
     <script type="text/javascript" src="/vendor/jquery-2.2.3.min.js"></script>
-
-    <!-- JQuery UI JS -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
-
-    <!-- App JS -->
-    <script type="text/javascript" src="/scripts/app.js"></script>
-    
-    <!-- Char counter JS -->
-    <script type="text/javascript" src="/scripts/composer-char-counter.js"></script>
-    
-    <!-- Moment JS -->
     <script type="text/javascript" src="/scripts/moment.js"></script>
-      
+
+    <!-- Project JS -->
+    <script type="text/javascript" src="/scripts/client_tweets.js"></script>
+    <script type="text/javascript" src="/scripts/client_users.js"></script>
+    <script type="text/javascript" src="/scripts/char-counter.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
 
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,700,700i" rel="stylesheet">
-
   </head>
 
   <body>
@@ -61,22 +43,18 @@
       <img class="logo" src="/images/bird.png">
       <span class="header noselect">Tweeter</span>
       <span id="nav-button-box">
-
         <button id="login-register-btn" data-status="off">
           <i class="fa fa-window-maximize" aria-hidden="true"></i>
           <span class="button-label">&nbsp;Login/Register</span>
         </button>
-
         <button id="logout-btn">
           <i class="fa fa-sign-out" aria-hidden="true"></i>
           <span class="button-label">&nbsp;Logout</span>
         </button>
-
         <button id="compose">
           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
           <span class="button-label">&nbsp;Compose</span>
         </button>
-
       </span>
     </nav>
 
@@ -86,6 +64,7 @@
 
     <main class="container" id="mainArea">
 
+      <!-- Container that holds login/register form (hidden by default) -->
       <section id="login-register-section" class="container no-fade">
         <h2 class="noselect">Login/Register
             <span class="close-button">
@@ -148,7 +127,8 @@
           </table>
         </form>
       </section>
-      
+
+      <!-- New tweet form -->
       <section class="tweet-sections">
         <article class="new-tweet">
           <h2 class="noselect">Compose Tweet</h2>
@@ -161,9 +141,8 @@
         </article>
       </section>
 
-      <section class="tweet-sections" id="tweets-container">
-
-      </section>
+      <!-- Container that holds all the tweets -->
+      <section class="tweet-sections" id="tweets-container"></section>
 
     </main>
 

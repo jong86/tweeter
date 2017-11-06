@@ -44,7 +44,9 @@ module.exports = function(DataHelpers) {
   // Post to logout
   //
   usersRoutes.post("/logout", function(req, res) {
+    console.log("got into route")
     if (req.session) {
+      console.log("nullifying req.session")
       req.session = null;
     }
     res.json(req.session);
@@ -71,7 +73,9 @@ module.exports = function(DataHelpers) {
             if (err) {
               res.status(500).json({ error: err.message });
             } else {
-              res.status(201).send({ message: "Registration successful, you may now log in.", error: false });
+              req.session.user_id = results._id;
+              res.status(200).send("registered, logging in");
+              // res.status(201).send({ message: "Registration successful, you may now log in.", error: false });
             }
           });
         } else {

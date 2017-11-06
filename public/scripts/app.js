@@ -1,156 +1,20 @@
 $(function() {
 
+
+  //---------------------------------------------------------
+  // Compose button event handler for showing new tweet form:
   //
-  // For function that escapes HTML to avoid cross-site scripting:
-  var entityMap = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;',
-    '/': '&#x2F;',
-    '`': '&#x60;',
-    '=': '&#x3D;'
-  };
-
-  function escapeHtml(string) {
-    return String(string).replace(/[&<>"'`=\/]/g, function (s) {
-      return entityMap[s];
-    });
-  }
-
-
-  //
-  // Loops through tweets array from DB and calls function to create elements for them:
-  function renderTweets(tweetsArray) {
-    $("#tweets-container").empty();
-    tweetsArray.forEach((item) => {
-      $("#tweets-container").prepend(createTweetElement(item));
-    });
-  }
-
-
-  //
-  // Template/function for creating tweets:
-  function createTweetElement(tweetData) {
-    return `
-    <article class="tweet" data-tweet_id="${tweetData._id}">
-      <header>
-        <img src="${tweetData.user.avatars.small}" />
-        <h2>${escapeHtml(tweetData.user.name)}</h2>
-        <span class="handle">${escapeHtml(tweetData.user.handle)}</span>
-      </header>
-      <p>
-        ${escapeHtml(tweetData.content.text)}
-      </p>
-      <footer class="noselect">
-        <span class="age">${moment(tweetData.created_at).fromNow()}</span>
-        <span class="footer-buttons">
-          <span class="footer-button flag">
-            <i class="fa fa-flag" aria-hidden="true"></i>
-            <span class="flag-amount"></span>
-          </span>&nbsp;|&nbsp;
-          <span class="footer-button retweet">
-            <i class="fa fa-retweet" aria-hidden="true"></i>
-            <span class="retweet-amount"></span>
-          </span>&nbsp;|&nbsp;
-          <span class="footer-button like">
-            <i class="fa fa-heart" aria-hidden="true"></i>
-            <span class="like-amount">${tweetData.liked_by.length}</span>
-          </span>
-        </span>
-      </footer>
-    </article>
-    `;
-  }
-
-
-  //
-  // Retrive tweets from database
-  function getData() {
-    $.ajax({
-      method: 'GET',
-      url: '/tweets',
-    }).done(function(results) {
-      renderTweets(results.tweets);
-      if (results.session.user_id) {
-        guiLoggedIn();
-      } else {
-        guiLoggedOut();
-      }
-    });
-  }
-  getData();
-
-
-  //
-  // Helper functions for changing GUI based on logged in/out status
-  function guiLoggedOut() {
-    $(".new-tweet textarea").attr("disabled", true);
-    $(".new-tweet textarea").val("");
-    $(".new-tweet .counter").text("140");
-    $(".new-tweet .message").text("You must be logged in to tweet!");
-    $(".new-tweet .message").css("display", "inline");
-    $(".new-tweet input").attr("disabled", true);
-    $("#logout-btn").css("display", "none")
-    $("#login-register-btn").css("display", "inline")
-  }
-
-  function guiLoggedIn() {
-    $(".new-tweet textarea").attr("disabled", false);
-    $(".new-tweet textarea").val("");
-    $(".new-tweet .counter").text("140");
-    $(".new-tweet .message").css("display", "none");
-    $(".new-tweet input").attr("disabled", false);
-    $("#logout-btn").css("display", "inline")
-    $("#login-register-btn").css("display", "none")
-  }
-
-  function guiClearLoginRegisterForm() {
-    $("#login-register-form input").val("");
-  }
-
-  //
-  // Login/Register switch:
-  var toggleSwitch = $("#toggleSwitch");
-  var _clr_disabledBg = "#aaa";
-  var _clr_enabledBg = "rgba(255, 255, 255, 0.75)";
-  var _clr_defaultBtnTxt = "#00a08";
-  $("#btn-register").css("background-color", _clr_disabledBg);
-  $("#login-register-form #email").val("");
-  $("#login-register-form #password").val("");
-  $("#login-register-form #name").attr("disabled", true).val("");
-  $("#login-register-form #handle").attr("disabled", true).val("");
-
-  function flipToRegister() {
-    $("#btn-register").attr("disabled", false);
-    $("#btn-register").css("background-color", _clr_enabledBg);
-    $("#btn-login").attr("disabled", true);
-    $("#btn-login").css("background-color", _clr_disabledBg);
-    $("#login-register-form #name").attr("disabled", false);
-    $("#login-register-form #handle").attr("disabled", false);
-  }
-
-  function flipToLogin() {
-    $("#btn-register").attr("disabled", true);
-    $("#btn-register").css("background-color", _clr_disabledBg);
-    $("#btn-login").attr("disabled", false);
-    $("#btn-login").css("background-color", _clr_enabledBg);
-    $("#login-register-form #name").attr("disabled", true);
-    $("#login-register-form #handle").attr("disabled", true);
-  }
-
-  toggleSwitch.attr("checked", false); // sets default value on page load
-  toggleSwitch.on("click", function(event) { // checked true = register; checked false = login
-    if (this.checked === true) {
-      flipToRegister();
-    } else {
-      flipToLogin();
-    }
+  var newTweetSection = $(".new-tweet");
+  var newTweetTextarea = $("#new-tweet-form textarea");
+  $("#compose").on("click", function() {
+    newTweetSection.slideToggle(200);
+    newTweetTextarea.focus();
   });
 
 
-
+  //-------------------------------------
+  // Tweet submission form event handler:
+  //
   var submitButton = $(".new-tweet input");
   $("#new-tweet-form").on("submit", function(event) {
     event.preventDefault();
@@ -176,24 +40,14 @@ $(function() {
       data: data
     }).done(function() {
       theForm.reset();
-      getData();
+      getTweets();
       submitButton.removeAttr("disabled");
     });
   });
 
 
-
-  var newTweetSection = $(".new-tweet");
-  var newTweetTextarea = $("#new-tweet-form textarea");
-  $("#compose").on("click", function() {
-    newTweetSection.slideToggle(200);
-    newTweetTextarea.focus();
-  });
-
-
-
-  //
-  // [Like Button]
+  //---------------------------
+  // Like button event handler:
   //
   $(document).on("click", ".like", function() {
     var id = $(this).closest("article.tweet").data().tweet_id;
@@ -212,20 +66,38 @@ $(function() {
   });
 
 
+  //---------------------------------------------------------------
+  // Login/register form toggle-switch variables and event handler:
+  //
 
-  var inputChildren = $("#login-register-form").find(".input-field");
-  var errorDiv = $("#login-register-section div.errorText");
-  var iconError = "<i class='fa fa-exclamation-circle' aria-hidden='true'></i>";
-  var iconRightArrow = '<i class="fa fa-angle-double-right" aria-hidden="true"></i>';
-  var iconLeftArrow = '<i class="fa fa-angle-double-left" aria-hidden="true"></i>';
-  var defaultLoginRegisterMessage = `${iconLeftArrow} Flip switch to login or register ${iconRightArrow}`;
-  var clrLightGreen = "#abebc6";
-  errorDiv.html(defaultLoginRegisterMessage);
-  errorDiv.css("color", "black");
-  errorDiv.css("background-color", clrLightGreen);
+  // JQuery object storage into variables:
+  var toggleSwitch = $("#toggleSwitch");
 
-  function isFormOkay(n) {
-    for (let i = 0; i < n; i++) {
+  // Initial styling/setup:
+  $("#btn-register").css("background-color", _clr_disabledBg);
+  $("#login-register-form #email").val("");
+  $("#login-register-form #password").val("");
+  $("#login-register-form #name").attr("disabled", true).val("");
+  $("#login-register-form #handle").attr("disabled", true).val("");
+
+  toggleSwitch.attr("checked", false); // sets default value on page load
+  toggleSwitch.on("click", function(event) { // checked true = register; checked false = login
+    if (this.checked === true) {
+      flipToRegister();
+    } else {
+      flipToLogin();
+    }
+  });
+
+
+
+  //---------------------------
+  // Login form event handlers:
+  //
+
+    // Can split this function to follow "single responsibility rule":
+  function isFormOkay(numFields) {
+    for (let i = 0; i < numFields; i++) {
       if (inputChildren[i].value === "") {
         setLoginRegisterError("Fields can't be empty!");
         return false;
@@ -233,27 +105,20 @@ $(function() {
     }
     return true;
   }
-
-  function setLoginRegisterError(string) {
-    errorDiv.html(`${iconError}&nbsp;${string}&nbsp;${iconError}`);
-    errorDiv.css("color", "red");
-    errorDiv.css("background-color", "pink");
-  }
-
-  function setLoginRegisterMessage(string) {
-    errorDiv.html(string);
-    errorDiv.css("color", "black");
-    errorDiv.css("background-color", clrLightGreen);
-  }
+  // ^^ Need to do this error handling on server side too
 
   $("#login-register-section #btn-login").on("click", function(event) {
+    console.log("clicked login");
     event.preventDefault();
     if (!isFormOkay(2)) { return; }
     var data = $(this).closest("form").serialize();
     $.ajax({
       method: "POST",
       url: "users/login",
-      data: data
+      data: data,
+      error: function(err) {
+        console.log(err)
+      }
     }).done(function(results) {
       if (results.session.user_id) {
         $("#login-register-section").fadeToggle(200);
@@ -261,8 +126,6 @@ $(function() {
       }
     });
   });
-
-
 
   $("#login-register-section #btn-register").on("click", function(event) {
     event.preventDefault();
@@ -278,15 +141,16 @@ $(function() {
         } else {
           toggleSwitch.trigger("click");
           guiClearLoginRegisterForm();
-          setLoginRegisterMessage(results.message);
+          // setLoginRegisterMessage(results.message);
+          console.log(results);
+          $("#login-register-section").fadeToggle(200);
+          guiLoggedIn();
         }
     })
   });
 
-
-
-
   $("#logout-btn").on("click", function() {
+    console.log("logging out");
     $.ajax({
       method: "POST",
       url: "/users/logout",
@@ -297,31 +161,39 @@ $(function() {
     })
   });
 
-
-
-
   $("#login-register-form").on("input", function() {
     setLoginRegisterMessage(defaultLoginRegisterMessage);
   });
 
-
-
-  const loginForm = $("#nav-button-box #login-register-form");
+  var loginForm = $("#nav-button-box #login-register-form");
   $("#login-register-btn").on("click", function(event) { // to display login menu
     $("#login-register-section").fadeToggle(200);
-
     guiClearLoginRegisterForm();
-
   });
-
-
 
   $("#login-register-section .close-button").on("click", function(event) { // to close login menu
     $(this).closest("section").fadeToggle(200);
   });
 
 
+  //-----------------------------------
+  // Set up of GUI error display stuff:
+  //
+  var inputChildren = $("#login-register-form").find(".input-field");
+  var iconError = "<i class='fa fa-exclamation-circle' aria-hidden='true'></i>";
+  var iconRightArrow = '<i class="fa fa-angle-double-right" aria-hidden="true"></i>';
+  var iconLeftArrow = '<i class="fa fa-angle-double-left" aria-hidden="true"></i>';
+  var defaultLoginRegisterMessage = `${iconLeftArrow} Flip switch to login or register ${iconRightArrow}`;
+  var clrLightGreen = "#abebc6";
 
+  var errorDiv = $("#login-register-section div.errorText");
+  errorDiv.html(defaultLoginRegisterMessage);
+  errorDiv.css("color", "black");
+  errorDiv.css("background-color", clrLightGreen);
 
+  //----------------------------------------
+  // Initial getting of tweets on page load:
+  //
+  getTweets();
 
 });
